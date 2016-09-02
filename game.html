@@ -7,15 +7,36 @@
     <title>YachtZoe!</title>
   </head>
   <body>
+    <main class="main_game">
+
     <header>
-      <ul>
-        <li><h1>YachtZoe!</h1></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li>
-      </ul>
+      <h1>YachtZoe!</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+
       </nav>
     </header>
+    <div class="score_table">
+    </div>
+    <div class="dice_area">
+        <div class="dice_display">
+          <ul id="dice_array">
+            <li class="the_dice">dice 1</li>
+            <li class="the_dice">dice 2</li>
+            <li class="the_dice">dice 3</li>
+            <li class="the_dice">dice 4</li>
+            <li class="the_dice">dice 5</li>
+          </ul>
+        </div>
+        <button type="button" name="button" id="roll_dice" >ROLL!</button>
+    </div>
 
+    <footer>&copy; 2016 The YachtZoe! Team</footer>
+
+  </main>
+    <script type="text/javascript" src="game.js"></script>
   </body>
 </html>
