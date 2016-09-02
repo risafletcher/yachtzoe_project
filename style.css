@@ -66,3 +66,43 @@ li {
 a {
   text-decoration: none;
 }
+
+
+
+/*  Game page styling  */
+.main_game {
+	width: 960px;
+	height: 800px;
+}
+
+.dice_area {
+	width: 100%;
+}
+
+#dice_array {
+	width: 350px;
+	margin: 0 auto;
+}
+
+.the_dice {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	margin: 0 auto;
+	margin-right: 5px;
+	border: 1px solid black;
+}
+
+#roll_dice {
+	/* button to roll dice */
+	width: 150px;
+	margin-top: 50px;
+	margin-left: 375px;
+	font-size: 18px;
+}
+
+footer {
+	width: 250px;
+	margin: 150px auto;
+}
