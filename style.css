@@ -77,7 +77,7 @@ div {
 
 nav {
 	background-color:#999;
-	margin:0 auto;
+	margin-bottom:10px;
 	padding:5px;
 }
 
@@ -90,12 +90,22 @@ nav {
 	text-align:center;
 }
 
-.player_info {
-	display:inline-block;
+.inputcontainer {
+	width:300px;
+	clear: both;
 }
 
-.showhideinputs {
-	visibility:hidden;
+.player_info {
+	display:inline-block;
+	width:100%;
+	clear: both;
+}
+
+.hide_me {
+    visibility:hidden;
+}
+.show_me {
+    visibility:visible;
 }
 
 .hide_me {

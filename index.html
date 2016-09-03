@@ -29,15 +29,16 @@
         <p>
           How many people are playing?
         </p>
+        <br>
         <div class="playerRadios">
-          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYes();" id="onePlayer">One
-          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYes();" id="twoPlayers">Two
+          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="onePlayer">One
+          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="twoPlayers">Two
         </div>
         <!--end radio buttons-->
 
       <!--player name input fields; set to show or hide depending on radio selection-->
-      <div class="showhideinputs">
-        <div class="player_info" id="onePlayerForm">
+      <div class="inputcontainer">
+        <div class="player_info hide_me" id="onePlayerForm">
           <form action="">
             <label for="player_1"><b>Player 1 Name: </b></label><input type="text" name="player_1" id="player1Name"/>
           </form>
@@ -45,7 +46,7 @@
 
         <br>
 
-        <div class="player_info" id="twoPlayerForm">
+        <div class="player_info hide_me" id="twoPlayerForm">
           <form action="">
             <label for="player_2"><b>Player 2 Name: </b></label><input type="text" name="player_2" id="player2Name" />
           </form>
@@ -60,7 +61,7 @@
       <!---end player input--->
     </main>
 
-    <footer>&copy 2016 The YachtZoe! Team</footer>
+    <footer>&copy; 2016 The YachtZoe! Team</footer>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
