@@ -3,3 +3,4 @@
 
 - Initial scaffolding and objects
 - Adding dice rolling base process. JPG
+- hold selected dice. JPG

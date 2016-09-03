@@ -18,17 +18,18 @@ function rollDiceHandler() {
   // handle the clicks of the roll dice button.
   // Clear out the array...
   dice = [];
-  for (var d = 0; d < 5; d++) {
-    var randomDie = randomNbrGen();
-    dice.push(randomDie);
-  }
-  console.log('the dice array: ', dice);
 
   var diceLI = document.getElementsByClassName('the_dice');
+  var holdCBox = document.getElementsByClassName('hold_dice');
 
-  for (d = 0; d < diceLI.length; d++) {
-    diceLI[d].textContent = dice[d];
+  for (var d = 0; d < diceLI.length; d++) {
+    if (!holdCBox[d].checked) {
+      var randomDie = randomNbrGen();
+      diceLI[d].textContent = randomDie;
+      dice[d] = randomDie;
+    }
   }
+
   numberOfRolls += 1;
   if (numberOfRolls >= maxNbrRolls) {
     rollButton.disabled = true;
