@@ -98,6 +98,14 @@ nav {
 	visibility:hidden;
 }
 
+.hide_me {
+	visibility:hidden;
+}
+.show_me {
+	visibility:visible;
+}
+
+
 .player_inputs {
 	margin:0 auto;
 	text-align:center;
@@ -133,6 +141,21 @@ nav {
 	margin: 0 auto;
 	margin-right: 5px;
 	border: 1px solid black;
+}
+
+#hold_dice_array {
+	margin: 0 auto;
+}
+#hold_dice_array h3 {
+	display: inline-block;
+	margin-right: 170px;
+}
+
+input.hold_dice {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin: 5px 35px 0px 0px;
 }
 
 #roll_dice {
