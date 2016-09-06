@@ -7,14 +7,18 @@ var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of 
 
 var thePlayers = ['Player 1', 'Player 2'];
 
+//this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
+var playerTurn = 0;
+
 var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
-//used to keep track of whose turn it is
+//used to keep track of how many turns have passed(may be usefull in determining when to end the game)
 var turnCounter = 0;
 
+//calling turn function to begin first turn
 turn();
 
-//this function determines whos turn it is. It renders a message at the top of the dice area and returns an ineger that corresponds to the player in thePlayers array;
+//this function determines whos turn it is. It renders a message at the top of the dice area and returns an integer that corresponds to the player in thePlayers array;
 function turn() {
   //insures that the player cannot hold any of the duce from the previous turn
   var holds = document.getElementById('hold_dice_array');
@@ -28,11 +32,10 @@ function turn() {
   rollButton.disabled = false;
 
   //decides which player to display at the top of screen
-  var playerTurn = turnCounter % thePlayers.length;
+  playerTurn = turnCounter % thePlayers.length;
   var turnAlert = document.getElementById('turn');
   turnAlert.textContent = thePlayers[playerTurn] + '\'s turn';
 
-  return playerTurn;
 }
 
 //this function unchecks the previously selected boxes between turns
@@ -93,6 +96,7 @@ function rollDiceHandler() {
 
   calcScoreChoices();
   updateScoreTable();
+
   numberOfRolls += 1;
   if (numberOfRolls >= maxNbrRolls) {
     rollButton.disabled = true;
@@ -211,12 +215,14 @@ function createScoreTable () {
 
 //this function will update the table with potential scoring options every time the dice are rolled.
 function updateScoreTable() {
-  //TODO we will need to put in a control flow about who's column to update once we have the turns logic worked out.
+
   var playerOneColumn = document.getElementsByClassName('player_one');
   var playerTwoColumn = document.getElementsByClassName('player_two');
   var currentColumn;
   var otherColumn;
-  if (turn() === 0){
+
+  //this uses the turnCounter var to determine which players column to display the potential scores on
+  if (playerTurn === 0){
     currentColumn = playerOneColumn;
     otherColumn = playerTwoColumn;
   } else {
