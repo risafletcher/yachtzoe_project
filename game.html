@@ -10,13 +10,13 @@
     <main class="main_game">
 
     <header>
-      <h1>YachtZoe!</h1>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><h1>YachtZoe!</h1></li>
+          <li class="navLink"><a href="index.html">Home</a></li>
+          <li class="navLink"><a href="about.html">About</a></li>
+          <li class="navLink"><a href="scoreboard.html">Scoreboard</a></li>
         </ul>
-
       </nav>
     </header>
     <div class="score_table_div">
@@ -35,7 +35,7 @@
             <li class="the_dice"><img src="images/dice_five.png" alt="" /></li>
           </ul>
 
-          <div id="hold_dice_array">
+          <div id="hold_dice_array" class="hideFirst hide_me">
             <h3>Check box to Hold the dice:</h3>
             <div class="hold_cboxes">
               <input type="checkbox" id="cbox1" class="hold_dice">
@@ -46,8 +46,9 @@
             </div>
           </div>
         </div>
-        <button type="button" name="button" id="roll_dice" >ROLL!</button>
-    </div>
+        <button type="button" name="button" id="roll_dice">ROLL!</button>
+        <button type="button" name="button" id="save_progress">Save Progress</button>
+        </div>
 
     <footer>&copy; 2016 The YachtZoe! Team</footer>
 

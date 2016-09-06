@@ -232,6 +232,13 @@ input.hold_dice {
 	font-size: 18px;
 }
 
+#save_progress {
+	width: 150px;
+	margin-top: 50px;
+	margin-left: 175px;
+	font-size: 18px;
+}
+
 footer {
 	clear: left;
 	width: 250px;
