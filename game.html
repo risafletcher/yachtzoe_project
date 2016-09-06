@@ -19,25 +19,31 @@
 
       </nav>
     </header>
-    <div class="score_table">
+    <div class="score_table_div">
+      <h3>The Score Table</h3>
+      <main id="the_scores" class="game_scores">
+        <!-- <img src="http://placehold.it/350x500" alt="" /> -->
+      </main>
     </div>
     <div class="dice_area">
         <div class="dice_display">
           <ul id="dice_array">
-            <li class="the_dice">dice 1</li>
-            <li class="the_dice">dice 2</li>
-            <li class="the_dice">dice 3</li>
-            <li class="the_dice">dice 4</li>
-            <li class="the_dice">dice 5</li>
+            <li class="the_dice"><img src="images/dice_one.png" alt="" /></li>
+            <li class="the_dice"><img src="images/dice_two.png" alt="" /></li>
+            <li class="the_dice"><img src="images/dice_three.png" alt="" /></li>
+            <li class="the_dice"><img src="images/dice_four.png" alt="" /></li>
+            <li class="the_dice"><img src="images/dice_five.png" alt="" /></li>
           </ul>
 
           <div id="hold_dice_array">
-            <h3>Check to Hold the dice:</h3>
-            <input type="checkbox" id="cbox1" class="hold_dice">
-            <input type="checkbox" id="cbox2" class="hold_dice">
-            <input type="checkbox" id="cbox3" class="hold_dice">
-            <input type="checkbox" id="cbox4" class="hold_dice">
-            <input type="checkbox" id="cbox5" class="hold_dice">
+            <h3>Check box to Hold the dice:</h3>
+            <div class="hold_cboxes">
+              <input type="checkbox" id="cbox1" class="hold_dice">
+              <input type="checkbox" id="cbox2" class="hold_dice">
+              <input type="checkbox" id="cbox3" class="hold_dice">
+              <input type="checkbox" id="cbox4" class="hold_dice">
+              <input type="checkbox" id="cbox5" class="hold_dice">
+            </div>
           </div>
         </div>
         <button type="button" name="button" id="roll_dice" >ROLL!</button>
