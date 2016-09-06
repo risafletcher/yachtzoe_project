@@ -108,14 +108,6 @@ nav {
     visibility:visible;
 }
 
-.hide_me {
-	visibility:hidden;
-}
-.show_me {
-	visibility:visible;
-}
-
-
 .player_inputs {
 	margin:0 auto;
 	text-align:center;
@@ -177,6 +169,13 @@ nav {
 
 .game_scores tfoot {
   font-weight: bold;
+}
+
+#turn {
+	font-size: 30px;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 /* ============================ */
