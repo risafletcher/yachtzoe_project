@@ -23,7 +23,7 @@ var dice = [];          // array of rolled dice.
 var numberOfRolls = 0;  // current number of rolls
 var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
 var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  // eslint-disable-line
-var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var potentialScores = [0, 0, 0, 0, 0, 0, 50, 50, 50, 50, 50, 50, 50];
 
 // generate the initial score table
 createScoreTable();
@@ -57,7 +57,7 @@ function rollDiceHandler() {
   }
 
   calcScoreChoices();
-
+  updateScoreTable();
   numberOfRolls += 1;
   if (numberOfRolls >= maxNbrRolls) {
     rollButton.disabled = true;
@@ -73,7 +73,7 @@ function randomNbrGen() {
 function calcScoreChoices () {
   // logic to calculate the possible scores to apply
   // zero out the array before starting.
-  potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  potentialScores = [0, 0, 0, 0, 0, 0, 50, 50, 50, 50, 50, 50, 50];
 
   for (var i = 0; i < dice.length; i++) {
     if (dice[i] === 1) {
@@ -132,7 +132,12 @@ function createScoreTable () {
     for (p = 0; p < thePlayers.length; p++) {
       // create a column entry for each player.
       var td = document.createElement('td');
-      td.textContent = 0;   // TODO put the associated players score here!!!
+      if(p === 0) {
+        td.setAttribute('class', 'player_one');
+      } else {
+        td.setAttribute('class', 'player_two');
+      }
+      td.textContent = potentialScores[s];   // TODO put the associated players score here!!!
       tr.appendChild(td);
     }
     // put the row in the body.
@@ -164,3 +169,50 @@ function createScoreTable () {
   var scoreTableMain = document.getElementById('the_scores');
   scoreTableMain.appendChild(scoreTable);
 }
+
+//this function will update the table with potential scoring options every time the dice are rolled.
+function updateScoreTable() {
+  //TODO we will need to put in a control flow about who's column to update once we have the turns logic worked out.
+  var playerOneColumn = document.getElementsByClassName('player_one');
+  for(var i = 0; i < scoreOptions.length; i++) {
+    playerOneColumn[i].textContent = potentialScores[i];
+  }
+}
+
+// store completed game data for use by leaderboard...
+//in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
+function OldScores (name, score) {
+  this.playerName = name;
+  this.gameScore = score;
+  this.gameTime;
+}
+//  =============> from here to noted comment below, delete when dummy data no longer needed.
+//this array of score objects is being used a placeholder for the time being
+var pastScores = [];
+pastScores.push(new OldScores('Jane', 100));
+pastScores.push(new OldScores('cat', 5000));
+pastScores.push(new OldScores('Will', 100));
+pastScores.push(new OldScores('John', 300));
+pastScores.push(new OldScores('Risa', 1000));
+pastScores.push(new OldScores('Bill', 400));
+pastScores.push(new OldScores('Will', 1200));
+
+//putting dummied data array into local storage
+var scoresString = JSON.stringify(pastScores);
+localStorage.setItem('scores', scoresString);
+// ===============> here to above noted comment should be deleted when ready.
+
+function addScoreToHistory (playerName, playerScore) {  // eslint-disable-line
+ // get the existing data, then append the new items to it.
+
+ //retrieving stored scores and parsing back into array of objects
+  var retrievedHistory = localStorage.getItem('scores');
+  var oldScores = JSON.parse(retrievedHistory);
+
+  var latestScore = new OldScores(playerName, playerScore);
+  oldScores.push(latestScore);
+
+  //putting newly updated data array into local storage
+  var newScoresString = JSON.stringify(oldScores);
+  localStorage.setItem('scores', newScoresString);
+};
