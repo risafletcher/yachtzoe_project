@@ -2,8 +2,24 @@
 
 //in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
 
+function OldScores (name, score) {
+  this.playerName = name;
+  this.gameScore = score;
+  this.gameTime;
+}
+
 //this array of score objects is being used a placeholder for the time being
-var pastScores = [{name: 'cat', score: 5000}, {name:'Will', score: 10}, {name: 'John', score: 300}, {name: 'Risa', score: 200}, {name: 'Bill', score: 400}];
+var pastScores = [];
+pastScores.push(new OldScores('Jane', 100));
+pastScores.push(new OldScores('cat', 5000));
+pastScores.push(new OldScores('Will', 100));
+pastScores.push(new OldScores('John', 300));
+pastScores.push(new OldScores('Risa', 1000));
+pastScores.push(new OldScores('Bill', 400));
+pastScores.push(new OldScores('Will', 1200));
+
+//
+// pastScores = [{name: 'cat', score: 5000}, {name:'Will', score: 10}, {name: 'John', score: 300}, {name: 'Risa', score: 200}, {name: 'Bill', score: 400}];
 
 //putting dummy array into local storage
 var scoresString = JSON.stringify(pastScores);
@@ -16,25 +32,19 @@ var scores = JSON.parse(retrievedScores);
 //this var stores the top score objects
 var leaderBoard = [];
 
-
 calcTopScores();
 renderTable();
 
-//calculates top 3 scores and puts them in leaderBoard array in the right order. We can change i to accomdoate any number of top scores
+//sorts scores and puts them in leaderBoard array in the right order.
 function calcTopScores() {
-  for(var i = 0; i < 3; i++) {
-    var topScore = scores[0].score;
-    var leader = scores[0];
-    for(var j = 0; j < scores.length; j++) {
-      if(topScore < scores[j].score){
-        topScore = scores[j].score;
-        leader = scores[j];
-      }
-      // when and if the score object gets a time variable if the scores are equal we will use time to dtermine who gets the higher spot on the leaderboard
-    }
-    leaderBoard.push(leader);
-    scores.splice(scores.indexOf(leader), 1);
-  }
+  leaderBoard = scores;
+
+  // sort high scores to beginning of the array.
+  leaderBoard.sort(function(a,b) {
+    if (a.gameScore > b.gameScore) return -1;
+    if (a.gameScore < b.gameScore) return 1;
+    return 0;
+  });
 }
 
 //renders score data to table
@@ -69,8 +79,8 @@ function renderTable() {
 
     //setting the content for each row
     var place = i + 1;
-    leaderName.textContent = place + '. ' + leaderBoard[i].name;
-    leaderScore.textContent = leaderBoard[i].score;
+    leaderName.textContent = place + '. ' + leaderBoard[i].playerName;
+    leaderScore.textContent = leaderBoard[i].gameScore;
 
     //appending data to table
     tableRow.appendChild(leaderName);
