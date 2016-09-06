@@ -43,6 +43,18 @@ function rollDiceHandler() {
   var diceLI = document.getElementsByClassName('the_dice');
   var holdCBox = document.getElementsByClassName('hold_dice');
 
+  //Hide button before click
+
+  var rollFirstClick = document.getElementById('hold_dice_array');
+  rollFirstClick.addEventListener('click', showHolds());
+
+  function showHolds() {
+    document.getElementById('hold_dice_array').setAttribute('class', 'hideFirst show_me');
+  }
+
+  //End hide button before click
+
+
   for (var d = 0; d < diceLI.length; d++) {
     if (!holdCBox[d].checked) {
       var randomDie = randomNbrGen();
