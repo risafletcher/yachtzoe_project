@@ -10,6 +10,12 @@ var thePlayers = ['Player 1', 'Player 2'];
 //this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
 var playerTurn = 0;
 
+function Scores (name, score) {
+  this.name = name,
+  this.score = score,
+
+  score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
+}
 var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
 //used to keep track of how many turns have passed(may be usefull in determining when to end the game)
@@ -54,6 +60,27 @@ function SavedGameData (player1, player2, p1Scores, p2Scores) {   // eslint-disa
   var p1ScoreArray = p1Scores;  // eslint-disable-line
   var p2ScoreArray = p2Scores;  // eslint-disable-line
 }
+
+var savedScores = [];
+savedScores.push(new Scores('Will', 5));
+
+var scoresDataString = JSON.stringify(savedScores);
+localStorage.setItem('pastScores', scoresDataString);
+
+function addScoreLocal (name, score) {
+  var retrievedScores = localStorage.getItem('pastScores');
+  var lastScore = JSON.parse(retrievedScores);
+
+  var newScore = new Scores(name, score);
+  lastScore.push(newScore);
+
+  var newScoreString = JSON.stringify(lastScore);
+  localStorage.setItem('pastScores', newScoreString);
+};
+
+var saveButton = document.getElementById('save_progress');
+
+saveButton.addEventListener('click', addScoreLocal());
 
 
 // this is where a set of dice is rolled to get random values.
