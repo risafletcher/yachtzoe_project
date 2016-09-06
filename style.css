@@ -134,23 +134,77 @@ nav {
 	height: 800px;
 }
 
-.dice_area {
+.score_table_div {
+	width: 400px;
+	margin: 0 auto;
+	float: left;
+}
+
+.game_scores table {
+  border: 2px solid black;
+  width: 350px;
+  margin-left: 0px;
+  empty-cells: show;
+  margin-bottom: 10px;
+}
+
+.game_scores th, td {
+  border: 1px solid black;
+  border-spacing: 0px;
+}
+
+.game_scores th {
+  font-weight: bold;
+  font-family: Verdana, sans-serif;
+}
+
+.game_scores thead th {
+  border-bottom: 2px solid black;
+  text-align: center;
+  width: auto;
+}
+
+.game_scores tr th{
+  border-bottom: 2px solid black;
+	border-right: 2px solid black;
+  font-size: 16px;
+  width: 200px;
+}
+
+.game_scores td {
+  text-align: right;
+}
+
+.game_scores tfoot {
+  font-weight: bold;
+}
+
+/* ============================ */
+
+#the_scores {
 	width: 100%;
 }
 
+.dice_area {
+	width: 550px;
+	float: left;
+}
+
 #dice_array {
-	width: 350px;
-	margin: 0 auto;
+	width: 100%;
 }
 
 .the_dice {
 	display: inline-block;
-	width: 50px;
-	height: 50px;
+	width: 92px;
+	height: 92px;
 	text-align: center;
 	margin: 0 auto;
 	margin-right: 5px;
-	border: 1px solid black;
+}
+
+.the_dice img {
+	width: auto;
 }
 
 #hold_dice_array {
@@ -159,24 +213,27 @@ nav {
 #hold_dice_array h3 {
 	display: inline-block;
 	margin-right: 170px;
+	font-size: 20px;
+	margin-top: 15px;
 }
 
 input.hold_dice {
 	display: inline-block;
-	width: 20px;
-	height: 20px;
-	margin: 5px 35px 0px 0px;
+	width: 90px;
+	height: 50px;
+	margin: 5px;
 }
 
 #roll_dice {
 	/* button to roll dice */
 	width: 150px;
 	margin-top: 50px;
-	margin-left: 375px;
+	margin-left: 175px;
 	font-size: 18px;
 }
 
 footer {
+	clear: left;
 	width: 250px;
 	margin: 150px auto;
 }
