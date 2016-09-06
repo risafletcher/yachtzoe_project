@@ -1,9 +1,9 @@
 'use strict';
 
 // global variables
-var diceImages = ['images/dice_one.png', 'images/dice_two.png', 'images/dice_three.png', 'images/dice_four.png', 'images/dice_five.png', 'images/dice_six.png'];  // eslint-disable-line
+var diceImages = ['images/dice_one.png', 'images/dice_two.png', 'images/dice_three.png', 'images/dice_four.png', 'images/dice_five.png', 'images/dice_six.png'];
 
-var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of a Kind', '4 of a Kind', 'Full House', 'Small Straight', 'Large Straight', 'YachtZoe', 'Garbage'];
+var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of a Kind', '4 of a Kind', 'Full House', 'Small Straight', 'Large Straight', 'YachtZoe', 'Chance'];
 
 var thePlayers = ['Will', 'Risa'];
 
@@ -46,11 +46,13 @@ function rollDiceHandler() {
   for (var d = 0; d < diceLI.length; d++) {
     if (!holdCBox[d].checked) {
       var randomDie = randomNbrGen();
-      diceLI[d].textContent = randomDie;
-      // diceLI[d].img.src = diceImages[randomDie];
+      diceLI[d].textContent = '';
+      var img = document.createElement('img');
+      img.setAttribute('src', diceImages[randomDie - 1]);
+      diceLI[d].appendChild(img);
       dice[d] = randomDie;
     } else {
-      // nothing
+      // nothing?? Is there anything to do in this case?
     }
   }
 
@@ -88,6 +90,9 @@ function calcScoreChoices () {
       potentialScores[5] += 6;
     }
   }
+  // 3 of a Kind
+
+
 }
 
 
