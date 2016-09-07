@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css" >
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Lobster" rel="stylesheet">
     <title>The Original YachtZoe!</title>
   </head>
   <body>
@@ -10,9 +11,9 @@
       <nav>
         <ul>
           <li><h1 class="branding">YachtZoe!</h1></li>
-          <li class="navLink"><a href="#">Home</a></li>
-          <li class="navLink"><a href="about.html">About</a></li>
-          <li class="navLink"><a href="about.html">Scoreboard</a></li>
+          <li><a href="index.html" class="navLink">Home</a></li>
+          <li><a href="about.html" class="navLink">About</a></li>
+          <li><a href="about.html" class="navLink">Scoreboard</a></li>
           <!-- <li class="navLink"><a href="scoreboard.html">Scoreboard</a></li> -->
         </ul>
       </nav>
@@ -21,13 +22,13 @@
     <main>
       <br>
       <div class="hero">
-        <i class="original">The original</i>
+        <p class="original">The original</p>
         <p class="indexBranding">YachtZoe!</p>
       </div>
 
       <!---player input--->
       <div class="player_inputs">
-        <br>
+        <br><br>
         <!--One or Two player radio buttons-->
         <p>
           How many people are playing?
@@ -37,11 +38,13 @@
           <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="onePlayer" checked>One
           <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="twoPlayers">Two
         </div>
+        <br>
         <!--end radio buttons-->
 
         <!--player name input fields; set to show or hide depending on radio selection-->
         <div class="inputcontainer">
           <form action="" id="players_form">
+
             <div class="player_info" id="onePlayerForm">
                 <label for="player_1"><b>Player 1 Name: </b></label><input type="text" name="player_1" id="player1Name" required/>
             </div>
@@ -57,7 +60,7 @@
       </div>
     </main>
 
-    <footer>&copy; 2016 The Original YachtZoe! Team</footer>
+    <footer class="footer">&copy; 2016 The Original YachtZoe! Team</footer>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
