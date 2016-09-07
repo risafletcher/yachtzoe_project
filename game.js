@@ -8,7 +8,7 @@ var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of 
 var thePlayers;
 
 // global variables used as local storage keys
-var savedGameDataKey = 'SavedGameInfo'; 
+var savedGameDataKey = 'SavedGameInfo';
 var storedPlayerKey = 'players';
 var pastScoresKey = 'pastScores';
 var oldScoresKey = 'oldScores';
@@ -140,7 +140,6 @@ function rollDiceHandler() {
   if (numberOfRolls >= maxNbrRolls) {
     rollButton.disabled = true;
   }
-  console.log(numberOfRolls);
 }
 
 function randomNbrGen() {
@@ -332,7 +331,6 @@ function updateScoreTable() {
 
   if(thePlayers.length === 1){
     for(var i = 0; i < scoreOptions.length; i++) {
-      playerOneColumn[i].setAttribute('class', 'player_one');
       playerOneColumn[i].textContent = potentialScores[i];
       playerOneColumn[i].setAttribute('class', 'player_one clickable');
       playerOneColumn[i].setAttribute('id', i);
@@ -349,21 +347,18 @@ function updateScoreTable() {
     }
     for( i = 0; i < scoreOptions.length; i++) {
       var scoreCell = currentColumn[i];
-      var playerClass = scoreCell.getAttribute('class');
 
-      //insures that we dont append multiple clickable attributes
+      //turns cursor into a pointer when hovering over clickable cell
       if(playerTurn === 0) {
-        scoreCell.setAttribute('class', 'player_one');
+        scoreCell.setAttribute('class', 'player_one clickable');
       } else {
-        scoreCell.setAttribute('class', 'player_two');
+        scoreCell.setAttribute('class', 'player_two clickable');
       }
 
       scoreCell.textContent = potentialScores[i];
-      scoreCell.setAttribute('class', playerClass + ' clickable');
       scoreCell.setAttribute('id', i);
       scoreCell.addEventListener('click', chooseScore);
       otherColumn[i].textContent = 0;
-      console.log(scoreCell);
     }
   }
 }
@@ -380,17 +375,18 @@ function chooseScore(e) {
   console.log(gameScores[playerTurn].score[scoreIndex]);
   gameScores[playerTurn].score[scoreIndex].push(roundScore);
 
-  //makes sure that the players cells are no longer clickable after they choose a score currently not working
+  //makes sure that the other players cells are not clickable and do not look clickable
+  for(var i = 0; i < scoreOptions.length; i++){
+    var disableElt = document.getElementById(i);
+    disableElt.removeEventListener('click', chooseScore);
 
-  // for(var i = 0; i < scoreOptions.length; i++){
-  //   if(playerTurn === 0){
-  //     playerOneColumn[i].removeEventListener('click', chooseScore);
-  //     playerOneColumn[i].setAttribute('class', 'not_clickable');
-  //   } else {
-  //     playerTwoColumn[i].removeEventListener('click', chooseScore);
-  //     playerTwoColumn[i].setAttribute('class', 'not_clickable');
-  //   }
-  // }
+    if(playerTurn === 0) {
+      disableElt.setAttribute('class', 'player_one not_clickable');
+    } else {
+      disableElt.setAttribute('class', 'player_two not_clickable');
+    }
+    disableElt.removeAttribute('id');
+  }
 
   //this causes the turn to end when the user selects their score
   turnCounter += 1;
