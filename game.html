@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css" >
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Lobster" rel="stylesheet">
     <title>The Original YachtZoe!</title>
   </head>
   <body>
@@ -12,15 +12,17 @@
     <header>
       <nav>
         <ul>
-          <li><h1>YachtZoe!</h1></li>
-          <li class="navLink"><a href="index.html">Home</a></li>
-          <li class="navLink"><a href="about.html">About</a></li>
+          <li><h1 class="branding">YachtZoe!</h1></li>
+          <li><a href="index.html" class="navLink">Home</a></li>
+          <li><a href="about.html" class="navLink">About</a></li>
+          <li><a href="about.html" class="navLink">Scoreboard</a></li>
           <!-- <li class="navLink"><a href="scoreboard.html">Scoreboard</a></li> -->
         </ul>
       </nav>
     </header>
     <div class="score_table_div">
-      <h3>The Score Table</h3>
+      <h1>The Score Table</h1>
+      <br>
       <main id="the_scores" class="game_scores">
         <!-- <img src="http://placehold.it/350x500" alt="" /> -->
       </main>
@@ -50,8 +52,7 @@
         <button type="button" name="button" id="roll_dice">ROLL!</button>
         <button type="button" name="button" id="save_progress">Save Progress</button>
         </div>
-
-    <footer>&copy; 2016 The Original YachtZoe! Team</footer>
+    <footer class="footer">&copy; 2016 The Original YachtZoe! Team</footer>
 
   </main>
     <script type="text/javascript" src="game.js"></script>

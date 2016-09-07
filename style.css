@@ -50,11 +50,12 @@ table {
 body {
   width: 960px;
 	margin:0 auto;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a {
 	text-decoration:none;
-	color:#000;
+	color:#FFF;
 }
 
 a:hover {
@@ -75,13 +76,28 @@ div {
 	margin:0 auto;
 }
 
+h1, h2, h3 {
+	font-family:'Lobster', cursive;
+}
+
 nav {
-	background-color:#999;
-	padding:10px;
+	background-color:#a41010;
+	padding:15px;
+	font-family: 'Open Sans', sans-serif;
+	color:#FFF;
+	border-bottom:5px solid #7b0c0c;
 }
 
 .navLink {
 	margin-left:50px;
+	text-align:center;
+	color:#FFF;
+	font-family:'Lobster', cursive;
+	font-size:20px;
+}
+
+.navLink:hover {
+	color:#e68a8a;
 }
 
 .hero {
@@ -92,6 +108,9 @@ nav {
 .original {
 	font-style: italic;
 	font-size: 24px;
+	font-family:'Lobster', cursive;
+	margin-left:-50px;
+	-webkit-transform: rotate(-10deg);
 }
 
 @font-face{
@@ -104,12 +123,13 @@ nav {
 	-webkit-transform: rotate(-10deg);
 }
 
+/* CSS shadow effect from http://codepen.io/ThatGuySam/pen/CytDA */
+
 .indexBranding {
 	font-family: 'Revue', sans-serif;
 	font-size: 60px;
 	text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
 	-webkit-transform: rotate(-10deg);
-	line-height:100px;
 }
 
 .inputcontainer {
@@ -131,7 +151,7 @@ nav {
 }
 
 .player_inputs {
-	margin:0 auto;
+	margin:5px;
 	text-align:center;
 }
 
@@ -140,7 +160,11 @@ nav {
 	margin-left:15px;
 }
 
-
+.footer {
+	width:600px;
+	text-align:center;
+	font-family:'Lobster', cursive;
+}
 
 /*  Game page styling  */
 .main_game {
@@ -150,12 +174,12 @@ nav {
 
 .score_table_div {
 	width: 400px;
-	margin: 0 auto;
+	margin-top:10px;
 	float: left;
 }
 
 .game_scores table {
-  border: 2px solid black;
+  border: 1px solid black;
   width: 350px;
   margin-left: 0px;
   empty-cells: show;
@@ -173,15 +197,17 @@ nav {
 }
 
 .game_scores thead th {
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
   text-align: center;
+	font-family:'Lobster', cursive;
   width: auto;
 }
 
 .game_scores tr th{
-  border-bottom: 2px solid black;
-	border-right: 2px solid black;
-  font-size: 16px;
+  border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	font-family:'Revue', cursive;
+  font-size: 20px;
   width: 200px;
 }
 
@@ -325,8 +351,8 @@ hr {
 }
 
 .about p {
-	width: calc(66% - 30px);
-	padding-left: 30px;
+	width: calc(60% - 30px);
+	padding-left: 20px;
 	display: inline-block;
 	margin-top: 30px;
 
@@ -335,4 +361,5 @@ hr {
 .about img {
 	margin-top: 30px;
 	vertical-align: top;
+	height:300px;
 }
