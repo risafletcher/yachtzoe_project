@@ -18,11 +18,9 @@ function getPlayerInfo () {
 //this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
 var playerTurn = 0;
 
-function Scores (name, score) {
+function Scores (name) {
   this.name = name,
-  this.score = score,
-
-  score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
+  this.score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
 }
 var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
