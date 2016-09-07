@@ -124,6 +124,7 @@ nav {
 .branding {
 	font-family: 'Revue', sans-serif;
 	-webkit-transform: rotate(-10deg);
+	margin-right:10px;
 }
 
 /* CSS shadow effect from http://codepen.io/ThatGuySam/pen/CytDA */
@@ -216,39 +217,51 @@ nav {
   margin-left: 0px;
   empty-cells: show;
   margin-bottom: 10px;
+	border-radius:5px;
+	border-right:1px solid #7b0c0c;
+	border-bottom:1px solid #7b0c0c;
+	border-left:1px solid #d22c2c;
+	border-top:1px solid #d22c2c;
 }
 
 .game_scores th, td {
-  border: 1px solid white;
-  border-spacing: 0px;
+  border:1px solid #ad2727;
 }
 
 .game_scores th {
   font-weight: bold;
-  font-family: 'Raleway', sans-serif;
-	background-color:#eba1a1;
+	background-color:#a41010;
+	color:#FFF;
 }
 
 .game_scores thead th {
-  border-bottom: 1px solid white;
   text-align: center;
-	font-family:'Raleway', sans-serif;
+	border-top:1px solid #a41010;
+	border-left:1px solid #a41010;
+	border-right:1px solid #a41010;
+	border-bottom:1px solid #ad2727;
   width: auto;
 }
 
 .game_scores tr th{
-	font-family: 'Raleway', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
+	font-weight:100;
   width: 200px;
+
 }
 
 .game_scores td {
   text-align: center;
-	background-color:#f5d0d0;
+	background-color:#e17272;
+	border:1px solid #e68a8a;
 }
 
 .game_scores td:hover {
-	background-color:#FFF;
+	background-color:#eba1a1;
+}
+
+.game_scores td:active {
+	background-color:#dc5b5b;
 }
 
 .game_scores tfoot {
