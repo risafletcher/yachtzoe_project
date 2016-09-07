@@ -6,6 +6,13 @@ var diceImages = ['images/dice_one.png', 'images/dice_two.png', 'images/dice_thr
 var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of a Kind', '4 of a Kind', 'Full House', 'Small Straight', 'Large Straight', 'YachtZoe', 'Chance'];
 
 var thePlayers;
+var dice = [];          // array of rolled dice.
+var numberOfRolls = 0;  // current number of rolls
+var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
+var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// dummied data for totalling.
+var dummyScores = [];
 
 // global variables used as local storage keys
 var savedGameDataKey = 'SavedGameInfo';
@@ -36,8 +43,6 @@ for(var i = 0; i < thePlayers.length; i++) {
   var user = new Scores(thePlayers[i]);
   gameScores.push(user);
 }
-
-var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
 //used to keep track of how many turns have passed(may be usefull in determining when to end the game)
 var turnCounter = 0;
@@ -99,10 +104,6 @@ saveButton.addEventListener('click', addScoreLocal());
 
 
 // this is where a set of dice is rolled to get random values.
-var dice = [];          // array of rolled dice.
-var numberOfRolls = 0;  // current number of rolls
-var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
-var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // generate the initial score table
 createScoreTable();
@@ -394,7 +395,7 @@ function chooseScore(e) {
   numberOfRolls = 0;
 
   // the end of the game happens when each player has completed 13 turns
-  if (turnCounter / thePlayers.length === 13) {
+  if (turnCounter / gameScores.length === 13) {
     // the game is over.
     endOfGame();
   };
@@ -403,6 +404,16 @@ function chooseScore(e) {
 
 function endOfGame () {
   // do end of game actions here.....
+  //
+  // // dummy the data...
+  // dummyScores.push(new Scores('Jane'));
+  // dummyScores.push(new Scores('WTF'));
+  // for (var idx = 0; idx < dummyScores.length; idx++) {
+  //   for (var scIdx = 0; scIdx < 13; scIdx++) {
+  //     dummyScores[idx].score[scIdx] = scIdx + 5;
+  //   };
+  // };
+
   totalPlayersScores();
 }
 
@@ -412,42 +423,30 @@ function totalPlayersScores() {
   var idForPlayer = 'player_one_total';
   var playerTotal = 0;
   var footTotal;
-  for (var i = 0; i < thePlayers.length; i++) {
+
+  for (var i = 0; i < gameScores.length; i++) {
+    playerTotal = 0;  // start each player with a zero total.
     if (i > 0) idForPlayer = 'player_two_total';
     footTotal = document.getElementById(idForPlayer);
-    for (var s = 0; s < thePlayers.score.length; s++) {
-      playerTotal += thePlayers.score[s][1];
+    for (var s = 0; s < gameScores[i].score.length; s++) {
+      playerTotal += gameScores[i].score[s][1];
     };
     footTotal.textContent = playerTotal;
 
     // also put that data into local storage.
-    addScoreToHistory(thePlayers[i].name, playerTotal);
+    addScoreToHistory(gameScores[i].name, playerTotal);
   };
 
 }
 
 // store completed game data for use by leaderboard...
-//in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
+// in order for high score to be calulated we must access local storage
+// and pull score objects with name and score attribute. We may add timestamp later
 function OldScores (name, score) {
   this.playerName = name;
   this.gameScore = score;
   this.gameTime;
 }
-//  =============> from here to noted comment below, delete when dummy data no longer needed.
-//this array of score objects is being used a placeholder for the time being
-var pastScores = [];
-pastScores.push(new OldScores('Jane', 100));
-pastScores.push(new OldScores('cat', 5000));
-pastScores.push(new OldScores('Will', 100));
-pastScores.push(new OldScores('John', 300));
-pastScores.push(new OldScores('Risa', 1000));
-pastScores.push(new OldScores('Bill', 400));
-pastScores.push(new OldScores('Will', 1200));
-
-//putting dummied data array into local storage
-var scoresString = JSON.stringify(pastScores);
-localStorage.setItem(oldScoresKey, scoresString);
-// ===============> here to above noted comment should be deleted when ready.
 
 function addScoreToHistory (playerName, playerScore) {
   // get the existing data, then append the new items to it.
