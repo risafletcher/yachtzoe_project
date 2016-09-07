@@ -178,6 +178,10 @@ nav {
 	margin-bottom: 10px;
 }
 
+.clickable {
+	cursor: pointer;
+}
+
 /* ============================ */
 
 #the_scores {
