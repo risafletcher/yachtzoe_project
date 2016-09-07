@@ -13,7 +13,11 @@
           <li class="navLink"><a href="#">Home</a></li>
           <li class="navLink"><a href="instructions.html">Instructions</a></li>
           <li class="navLink"><a href="about.html">About</a></li>
+<<<<<<< HEAD
           <li class="navLink"><a href="about.html">Scoreboard</a></li>
+=======
+          <!-- <li class="navLink"><a href="scoreboard.html">Scoreboard</a></li> -->
+>>>>>>> 99aea7a3ab822d3df51fd75a0055f23f030ead34
         </ul>
       </nav>
     </header>
@@ -32,34 +36,27 @@
         </p>
         <br>
         <div class="playerRadios">
-          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="onePlayer">One
+          <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="onePlayer" checked>One
           <input type="radio" name="playerchoice" onclick="javascript:twoPlayersYesNo();" id="twoPlayers">Two
         </div>
         <!--end radio buttons-->
 
-      <!--player name input fields; set to show or hide depending on radio selection-->
-      <div class="inputcontainer">
-        <div class="player_info hide_me" id="onePlayerForm">
-          <form action="">
-            <label for="player_1"><b>Player 1 Name: </b></label><input type="text" name="player_1" id="player1Name"/>
-          </form>
-        </div>
-
-        <br>
-
-        <div class="player_info hide_me" id="twoPlayerForm">
-          <form action="">
-            <label for="player_2"><b>Player 2 Name: </b></label><input type="text" name="player_2" id="player2Name" />
+        <!--player name input fields; set to show or hide depending on radio selection-->
+        <div class="inputcontainer">
+          <form action="" id="players_form">
+            <div class="player_info" id="onePlayerForm">
+                <label for="player_1"><b>Player 1 Name: </b></label><input type="text" name="player_1" id="player1Name" required/>
+            </div>
+            <br>
+            <div class="player_info hide_me" id="twoPlayerForm">
+                <label for="player_2"><b>Player 2 Name: </b></label><input type="text" name="player_2" id="player2Name" />
+            </div>
+            <!--end name fields-->
+            <br>
+            <button type="submit" name="button" id="play_button">Play!</button>
           </form>
         </div>
       </div>
-      <!--end name fields-->
-        <br>
-        <form action="game.html" class="button">
-          <input type="submit" value="Play!">
-        </form>
-      </div>
-      <!---end player input--->
     </main>
 
     <footer>&copy; 2016 The YachtZoe! Team</footer>
