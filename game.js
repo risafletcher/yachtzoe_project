@@ -5,7 +5,7 @@ var diceImages = ['images/dice_one.png', 'images/dice_two.png', 'images/dice_thr
 
 var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of a Kind', '4 of a Kind', 'Full House', 'Small Straight', 'Large Straight', 'YachtZoe', 'Chance'];
 
-var thePlayers = ['Player 1', 'Player 2'];
+var thePlayers;
 
 getPlayerInfo();
 
@@ -68,16 +68,16 @@ function SavedGameData (player1, player2, p1Scores, p2Scores) {   // eslint-disa
 }
 
 var savedScores = [];
-savedScores.push(new Scores('Will', 5));
+savedScores.push(new Scores('Will'));
 
 var scoresDataString = JSON.stringify(savedScores);
 localStorage.setItem('pastScores', scoresDataString);
 
-function addScoreLocal (name, score) {
+function addScoreLocal (name) {
   var retrievedScores = localStorage.getItem('pastScores');
   var lastScore = JSON.parse(retrievedScores);
 
-  var newScore = new Scores(name, score);
+  var newScore = new Scores(name);
   lastScore.push(newScore);
 
   var newScoreString = JSON.stringify(lastScore);
@@ -317,25 +317,34 @@ function updateScoreTable() {
   var currentColumn;
   var otherColumn;
 
-  //this uses the turnCounter var to determine which players column to display the potential scores on
-  if (playerTurn === 0){
-    currentColumn = playerOneColumn;
-    otherColumn = playerTwoColumn;
+  if(thePlayers.length === 1){
+    for(var i = 0; i < scoreOptions.length; i++) {
+      playerOneColumn[i].textContent = potentialScores[i];
+      playerOneColumn[i].setAttribute('class', 'player_one clickable');
+      playerOneColumn[i].addEventListener('click', chooseScore);
+    }
   } else {
-    currentColumn = playerTwoColumn;
-    otherColumn = playerOneColumn;
-  }
-  for(var i = 0; i < scoreOptions.length; i++) {
-    var scoreCell = currentColumn[i];
-    var playerClass = scoreCell.getAttribute('class');
+    //this uses the turnCounter var to determine which players column to display the potential scores on
+    if (playerTurn === 0){
+      currentColumn = playerOneColumn;
+      otherColumn = playerTwoColumn;
+    } else {
+      currentColumn = playerTwoColumn;
+      otherColumn = playerOneColumn;
+    }
+    for( i = 0; i < scoreOptions.length; i++) {
+      var scoreCell = currentColumn[i];
+      var playerClass = scoreCell.getAttribute('class');
 
-    scoreCell.textContent = potentialScores[i];
-    scoreCell.setAttribute('class', playerClass + ' clickable');
-    scoreCell.addEventListener('click', chooseScore);
-    otherColumn[i].textContent = 0;
-    console.log(scoreCell);
+      scoreCell.textContent = potentialScores[i];
+      scoreCell.setAttribute('class', playerClass + ' clickable');
+      scoreCell.addEventListener('click', chooseScore);
+      otherColumn[i].textContent = 0;
+      console.log(scoreCell);
+    }
   }
 }
+
 
 function chooseScore(e) {
   var click = e.target.textContent;
