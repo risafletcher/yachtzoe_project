@@ -15,7 +15,7 @@ var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var dummyScores = [];
 
 // global variables used as local storage keys
-var savedGameDataKey = 'SavedGameInfo';
+var savedGameDataKey = 'SavedGameInfo'; 
 var storedPlayerKey = 'players';
 var pastScoresKey = 'pastScores';
 var oldScoresKey = 'oldScores';
@@ -35,6 +35,16 @@ function Scores (name) {
   this.name = name,
   this.score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
 }
+
+//creating score objects for players and storing them in an array
+var gameScores = [];
+
+for(var i = 0; i < thePlayers.length; i++) {
+  var user = new Scores(thePlayers[i]);
+  gameScores.push(user);
+}
+
+var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
 //used to keep track of how many turns have passed(may be usefull in determining when to end the game)
 var turnCounter = 0;
@@ -74,7 +84,7 @@ function uncheckBoxes() {
 
 
 var savedScores = [];
-savedScores.push(new Scores('Will'));
+// savedScores.push(new Scores('Will'));
 
 var scoresDataString = JSON.stringify(savedScores);
 localStorage.setItem(pastScoresKey, scoresDataString);
@@ -325,8 +335,10 @@ function updateScoreTable() {
 
   if(thePlayers.length === 1){
     for(var i = 0; i < scoreOptions.length; i++) {
+      playerOneColumn[i].setAttribute('class', 'player_one');
       playerOneColumn[i].textContent = potentialScores[i];
       playerOneColumn[i].setAttribute('class', 'player_one clickable');
+      playerOneColumn[i].setAttribute('id', i);
       playerOneColumn[i].addEventListener('click', chooseScore);
     }
   } else {
@@ -342,8 +354,16 @@ function updateScoreTable() {
       var scoreCell = currentColumn[i];
       var playerClass = scoreCell.getAttribute('class');
 
+      //insures that we dont append multiple clickable attributes
+      if(playerTurn === 0) {
+        scoreCell.setAttribute('class', 'player_one');
+      } else {
+        scoreCell.setAttribute('class', 'player_two');
+      }
+
       scoreCell.textContent = potentialScores[i];
       scoreCell.setAttribute('class', playerClass + ' clickable');
+      scoreCell.setAttribute('id', i);
       scoreCell.addEventListener('click', chooseScore);
       otherColumn[i].textContent = 0;
       console.log(scoreCell);
@@ -355,7 +375,25 @@ function updateScoreTable() {
 function chooseScore(e) {
   var click = e.target.textContent;
   var roundScore = parseInt(click);
-  console.log(roundScore);
+  // var playerOneColumn = document.getElementsByClassName('player_one');
+  // var playerTwoColumn = document.getElementsByClassName('player_two');
+
+  var rowNumber = e.target.getAttribute('id');
+  var scoreIndex = parseInt(rowNumber);
+  console.log(gameScores[playerTurn].score[scoreIndex]);
+  gameScores[playerTurn].score[scoreIndex].push(roundScore);
+
+  //makes sure that the players cells are no longer clickable after they choose a score currently not working
+
+  // for(var i = 0; i < scoreOptions.length; i++){
+  //   if(playerTurn === 0){
+  //     playerOneColumn[i].removeEventListener('click', chooseScore);
+  //     playerOneColumn[i].setAttribute('class', 'not_clickable');
+  //   } else {
+  //     playerTwoColumn[i].removeEventListener('click', chooseScore);
+  //     playerTwoColumn[i].setAttribute('class', 'not_clickable');
+  //   }
+  // }
 
   //this causes the turn to end when the user selects their score
   turnCounter += 1;
