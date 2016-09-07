@@ -332,10 +332,14 @@ function updateScoreTable() {
 
   if(thePlayers.length === 1){
     for(var i = 0; i < scoreOptions.length; i++) {
-      playerOneColumn[i].textContent = potentialScores[i];
-      playerOneColumn[i].setAttribute('class', 'player_one clickable');
       playerOneColumn[i].setAttribute('id', i);
-      playerOneColumn[i].addEventListener('click', chooseScore);
+      if(gameScores[playerTurn].score[i].length === 1) {
+        playerOneColumn[i].textContent = potentialScores[i];
+        playerOneColumn[i].setAttribute('class', 'player_one clickable');
+        playerOneColumn[i].addEventListener('click', chooseScore);
+      } else {
+        playerOneColumn[i].textContent = gameScores[playerTurn].score[i][1];
+      }
     }
   } else {
     //this uses the turnCounter var to determine which players column to display the potential scores on
@@ -348,18 +352,27 @@ function updateScoreTable() {
     }
     for( i = 0; i < scoreOptions.length; i++) {
       var scoreCell = currentColumn[i];
-
-      //turns cursor into a pointer when hovering over clickable cell
-      if(playerTurn === 0) {
-        scoreCell.setAttribute('class', 'player_one clickable');
-      } else {
-        scoreCell.setAttribute('class', 'player_two clickable');
-      }
-
-      scoreCell.textContent = potentialScores[i];
       scoreCell.setAttribute('id', i);
-      scoreCell.addEventListener('click', chooseScore);
-      otherColumn[i].textContent = 0;
+
+      if(gameScores[playerTurn].score[i].length === 1){
+      //turns cursor into a pointer when hovering over clickable cell
+        if(playerTurn === 0) {
+          scoreCell.setAttribute('class', 'player_one clickable');
+        } else {
+          scoreCell.setAttribute('class', 'player_two clickable');
+        }
+
+        scoreCell.textContent = potentialScores[i];
+        scoreCell.addEventListener('click', chooseScore);
+        //this determines if the other player column displays zero or not
+        if((gameScores[(playerTurn + 1) % 2].score[i].length === 1)){
+          otherColumn[i].textContent = 0;
+        } else {
+          otherColumn[i].textContent = gameScores[(playerTurn + 1) % 2].score[i][1];
+        }
+      } else {
+        scoreCell.textContent = gameScores[playerTurn].score[i][1];
+      }
     }
   }
 }
