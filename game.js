@@ -153,32 +153,99 @@ function calcScoreChoices () {
   // logic to calculate the possible scores to apply
   // zero out the array before starting.
   potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
+  var countOfDice = [0, 0, 0, 0, 0, 0];
+  debugger;
   for (var i = 0; i < dice.length; i++) {
     if (dice[i] === 1) {
       potentialScores[0] += 1;
+      countOfDice[0] += 1;
     } else if (dice[i] === 2) {
       potentialScores[1] += 2;
+      countOfDice[1] += 1;
     } else if (dice[i] === 3) {
       potentialScores[2] += 3;
+      countOfDice[2] += 1;
     } else if (dice[i] === 4) {
       potentialScores[3] += 4;
+      countOfDice[3] += 1;
     } else if (dice[i] === 5) {
       potentialScores[4] += 5;
+      countOfDice[4] += 1;
     } else if (dice[i] === 6) {
       potentialScores[5] += 6;
-    }
-  }
-  // 3 of a Kind
+      countOfDice[5] += 1;
+    };
+  };
 
+  // 3 of a Kind - at least 3 of the same, total all dice
+  if (countOfDice.some(is3Count) || countOfDice.some(is4Count) || countOfDice.some(is5Count)) {
+    // we have a 3-of-a-kind, 4-of-a-kind or a YachtZoe
+    // all count for 3-of-a-kind.
+    for (i = 0; i < countOfDice.length; i++) {
+      // total all the dice, put into the 4-of-a-kind bucket.
+      potentialScores[6] += potentialScores[i];
+    };
+  };
+
+  // 4 of a Kind - at least 4 of the same, total all dice
+  if (countOfDice.some(is4Count) || countOfDice.some(is5Count)) {
+    // we have a 4-of-a-kind or a YachtZoe
+    // both count as 4-of-a-kind.
+    for (i = 0; i < countOfDice.length; i++) {
+      // total all the dice, put into the 4-of-a-kind bucket.
+      potentialScores[7] += potentialScores[i];
+    };
+  };
+
+  // Full House - at least 3 of the same and a pair, 25 pts
+  if ((countOfDice.some(is3Count) && countOfDice.some(is2Count)) || countOfDice.some(is5Count)) {
+    potentialScores[8] = 25;
+  };
+
+  // Small Straight - four consecutive dice, 30 pts
+  if ( ((countOfDice[0] === 1 || countOfDice[0] === 2) && (countOfDice[1] === 1 || countOfDice[1] === 2) && (countOfDice[2] === 1 || countOfDice[2] === 2) && (countOfDice[3] === 1 || countOfDice[3] === 2)) || ((countOfDice[1] === 1 || countOfDice[1] === 2) && (countOfDice[2] === 1 || countOfDice[2] === 2) && (countOfDice[3] === 1 || countOfDice[3] === 2) && (countOfDice[4] === 1 || countOfDice[4] === 2)) || ((countOfDice[2] === 1 || countOfDice[2] === 2) && (countOfDice[3] === 1 || countOfDice[3] === 2) && (countOfDice[4] === 1 || countOfDice[4] === 2) && (countOfDice[5] === 1 || countOfDice[5] === 2)) || countOfDice.some(is5Count) ){
+    potentialScores[9] = 30;
+  };
+
+  // Large Straight - five consecutive dice, 40 pts
+  if ((countOfDice[0] === 1 && countOfDice[1] === 1 && countOfDice[2] === 1 && countOfDice[3] === 1 && countOfDice[4] === 1) || (countOfDice[1] === 1 && countOfDice[2] === 1 && countOfDice[3] === 1 && countOfDice[4] === 1 && countOfDice[5] === 1) || (countOfDice.some(is5Count))) {
+    // we have a straight!
+    potentialScores[10] = 40;
+  };
+
+  // YachtZoe - all 5 dice the same, 50 pts
+  if (countOfDice.some(is5Count)) {
+    // we have a YachtZoe!
+    potentialScores[11] = 50;
+  };
+
+  // Chance - total all dice.
+  for (i = 0; i < countOfDice.length; i++) {
+    // total all the dice, put into the 4-of-a-kind bucket.
+    potentialScores[12] += potentialScores[i];
+  };
 }
 
+function is2Count (element, index, array) {
+  return element === 2;
+}
+
+function is3Count (element, index, array) {
+  return element === 3;
+}
+
+function is4Count (element, index, array) {
+  return element === 4;
+}
+
+function is5Count (element, index, array) {
+  return element === 5;
+}
 
 function createScoreTable () {
 
   // create the table
   var scoreTable = document.createElement('table');
-
 
   var tableHeader = document.createElement('thead');
   var headerRow   = document.createElement('tr');
