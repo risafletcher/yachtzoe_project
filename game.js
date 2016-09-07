@@ -150,7 +150,7 @@ function calcScoreChoices () {
   // zero out the array before starting.
   potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var countOfDice = [0, 0, 0, 0, 0, 0];
-  debugger;
+
   for (var i = 0; i < dice.length; i++) {
     if (dice[i] === 1) {
       potentialScores[0] += 1;
