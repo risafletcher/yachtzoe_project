@@ -204,6 +204,10 @@ nav {
 	cursor: pointer;
 }
 
+.not_clickable {
+	cursor: default;
+}
+
 /* ============================ */
 
 #the_scores {
