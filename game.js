@@ -7,6 +7,14 @@ var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of 
 
 var thePlayers = ['Player 1', 'Player 2'];
 
+getPlayerInfo();
+
+function getPlayerInfo () {
+  //retrieving stored player names and parsing back into array
+  var retrievedPlayers = localStorage.getItem('players');
+  thePlayers = JSON.parse(retrievedPlayers);
+}
+
 //this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
 var playerTurn = 0;
 
