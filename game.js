@@ -7,11 +7,17 @@ var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of 
 
 var thePlayers;
 
+// global variables used as local storage keys
+var savedGameDataKey = 'SavedGameInfo';
+var storedPlayerKey = 'players';
+var pastScoresKey = 'pastScores';
+var oldScoresKey = 'oldScores';
+
 getPlayerInfo();
 
 function getPlayerInfo () {
   //retrieving stored player names and parsing back into array
-  var retrievedPlayers = localStorage.getItem('players');
+  var retrievedPlayers = localStorage.getItem(storedPlayerKey);
   thePlayers = JSON.parse(retrievedPlayers);
 }
 
@@ -22,7 +28,6 @@ function Scores (name) {
   this.name = name,
   this.score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
 }
-var savedGameDataKey = 'SavedGameInfo';   // eslint-disable-line
 
 //used to keep track of how many turns have passed(may be usefull in determining when to end the game)
 var turnCounter = 0;
@@ -59,19 +64,13 @@ function uncheckBoxes() {
     }
   }
 }
-// create the savedGameObject here
-function SavedGameData (player1, player2, p1Scores, p2Scores) {   // eslint-disable-line
-  var playerName1 = player1;  // eslint-disable-line
-  var playerName2 = player2;  // eslint-disable-line
-  var p1ScoreArray = p1Scores;  // eslint-disable-line
-  var p2ScoreArray = p2Scores;  // eslint-disable-line
-}
+
 
 var savedScores = [];
 savedScores.push(new Scores('Will'));
 
 var scoresDataString = JSON.stringify(savedScores);
-localStorage.setItem('pastScores', scoresDataString);
+localStorage.setItem(pastScoresKey, scoresDataString);
 
 function addScoreLocal (name) {
   var retrievedScores = localStorage.getItem('pastScores');
@@ -81,7 +80,7 @@ function addScoreLocal (name) {
   lastScore.push(newScore);
 
   var newScoreString = JSON.stringify(lastScore);
-  localStorage.setItem('pastScores', newScoreString);
+  localStorage.setItem(pastScoresKey, newScoreString);
 };
 
 var saveButton = document.getElementById('save_progress');
@@ -93,18 +92,15 @@ saveButton.addEventListener('click', addScoreLocal());
 var dice = [];          // array of rolled dice.
 var numberOfRolls = 0;  // current number of rolls
 var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
-var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  // eslint-disable-line
 var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // generate the initial score table
 createScoreTable();
 
-
 // Initial roll for a turn, gets all 5 dice.
 var rollButton = document.getElementById('roll_dice');
 
 rollButton.addEventListener('click', rollDiceHandler);
-
 
 function rollDiceHandler() {
   // handle the clicks of the roll dice button.
@@ -220,19 +216,19 @@ function calcScoreChoices () {
   };
 }
 
-function is2Count (element, index, array) {
+function is2Count (element) {
   return element === 2;
 }
 
-function is3Count (element, index, array) {
+function is3Count (element) {
   return element === 3;
 }
 
-function is4Count (element, index, array) {
+function is4Count (element) {
   return element === 4;
 }
 
-function is5Count (element, index, array) {
+function is5Count (element) {
   return element === 5;
 }
 
@@ -276,7 +272,7 @@ function createScoreTable () {
       } else {
         td.setAttribute('class', 'player_two');
       }
-      td.textContent = potentialScores[s];   // TODO put the associated players score here!!!
+      td.textContent = potentialScores[s];
       tr.appendChild(td);
     }
     // put the row in the body.
@@ -293,12 +289,19 @@ function createScoreTable () {
   footHdr.textContent = 'Total:';
   footRow.appendChild(footHdr);
 
+  var idName = '';
   for (p = 0; p < thePlayers.length; p++) {
     // create a column entry for each player's total.
     var tdFoot = document.createElement('td');
-    tdFoot.textContent = 0;   // TODO put the associated players score here!!!
+    tdFoot.textContent = 0;
+    if (p === 0) {
+      idName = 'player_one_total';
+    } else {
+      idName = 'player_two_total';
+    };
+    tdFoot.setAttribute('id', idName);
     footRow.appendChild(tdFoot);
-  }
+  };
 
   // put the footer in the table.
   scoreFooter.appendChild(footRow);
@@ -355,6 +358,38 @@ function chooseScore(e) {
   turnCounter += 1;
   turn();
   numberOfRolls = 0;
+
+  // the end of the game happens when each player has completed 13 turns
+  if (turnCounter / thePlayers.length === 13) {
+    // the game is over.
+    endOfGame();
+  };
+
+}
+
+function endOfGame () {
+  // do end of game actions here.....
+  totalPlayersScores();
+}
+
+function totalPlayersScores() {
+  // loop through the players array, then for each, loop through scores to total.
+  // update the td element.
+  var idForPlayer = 'player_one_total';
+  var playerTotal = 0;
+  var footTotal;
+  for (var i = 0; i < thePlayers.length; i++) {
+    if (i > 0) idForPlayer = 'player_two_total';
+    footTotal = document.getElementById(idForPlayer);
+    for (var s = 0; s < thePlayers.score.length; s++) {
+      playerTotal += thePlayers.score[s][1];
+    };
+    footTotal.textContent = playerTotal;
+
+    // also put that data into local storage.
+    addScoreToHistory(thePlayers[i].name, playerTotal);
+  };
+
 }
 
 // store completed game data for use by leaderboard...
@@ -377,20 +412,21 @@ pastScores.push(new OldScores('Will', 1200));
 
 //putting dummied data array into local storage
 var scoresString = JSON.stringify(pastScores);
-localStorage.setItem('scores', scoresString);
+localStorage.setItem(oldScoresKey, scoresString);
 // ===============> here to above noted comment should be deleted when ready.
 
-function addScoreToHistory (playerName, playerScore) {  // eslint-disable-line
- // get the existing data, then append the new items to it.
+function addScoreToHistory (playerName, playerScore) {
+  // get the existing data, then append the new items to it.
 
- //retrieving stored scores and parsing back into array of objects
-  var retrievedHistory = localStorage.getItem('scores');
-  var oldScores = JSON.parse(retrievedHistory);
+  //retrieving stored scores and parsing back into array of objects
+  var oldScores = [];
+  var retrievedHistory = localStorage.getItem(oldScoresKey);
+  oldScores = JSON.parse(retrievedHistory);
 
   var latestScore = new OldScores(playerName, playerScore);
   oldScores.push(latestScore);
 
   //putting newly updated data array into local storage
   var newScoresString = JSON.stringify(oldScores);
-  localStorage.setItem('scores', newScoresString);
+  localStorage.setItem(oldScoresKey, newScoresString);
 };

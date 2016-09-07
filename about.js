@@ -2,6 +2,8 @@
 
 //in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
 
+var oldScoresKey = 'oldScores';
+
 function OldScores (name, score) {
   this.playerName = name;
   this.gameScore = score;
@@ -23,10 +25,10 @@ pastScores.push(new OldScores('Will', 1200));
 
 //putting dummy array into local storage
 var scoresString = JSON.stringify(pastScores);
-localStorage.setItem('scores', scoresString);
+localStorage.setItem(oldScoresKey, scoresString);
 
 //retrieving stored scores and parsing back into array of objects
-var retrievedScores = localStorage.getItem('scores');
+var retrievedScores = localStorage.getItem(oldScoresKey);
 var scores = JSON.parse(retrievedScores);
 
 //this var stores the top score objects
