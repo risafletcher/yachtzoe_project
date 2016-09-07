@@ -50,7 +50,7 @@ table {
 body {
   width: 960px;
 	margin:0 auto;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 }
 
 a {
@@ -83,7 +83,7 @@ h1, h2, h3 {
 nav {
 	background-color:#a41010;
 	padding:15px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 	color:#FFF;
 	border-bottom:5px solid #7b0c0c;
 }
