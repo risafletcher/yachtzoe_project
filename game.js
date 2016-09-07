@@ -127,10 +127,6 @@ function rollDiceHandler() {
   numberOfRolls += 1;
   if (numberOfRolls >= maxNbrRolls) {
     rollButton.disabled = true;
-    //these will be moved to the point where the user selects the score but for the time being they will live here
-    turnCounter += 1;
-    turn();
-    numberOfRolls = 0;
   }
   console.log(numberOfRolls);
 }
@@ -257,9 +253,26 @@ function updateScoreTable() {
     otherColumn = playerOneColumn;
   }
   for(var i = 0; i < scoreOptions.length; i++) {
-    currentColumn[i].textContent = potentialScores[i];
+    var scoreCell = currentColumn[i];
+    var playerClass = scoreCell.getAttribute('class');
+
+    scoreCell.textContent = potentialScores[i];
+    scoreCell.setAttribute('class', playerClass + ' clickable');
+    scoreCell.addEventListener('click', chooseScore);
     otherColumn[i].textContent = 0;
+    console.log(scoreCell);
   }
+}
+
+function chooseScore(e) {
+  var click = e.target.textContent;
+  var roundScore = parseInt(click);
+  console.log(roundScore);
+
+  //this causes the turn to end when the user selects their score
+  turnCounter += 1;
+  turn();
+  numberOfRolls = 0;
 }
 
 // store completed game data for use by leaderboard...
