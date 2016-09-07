@@ -217,6 +217,7 @@ nav {
   margin-left: 0px;
   empty-cells: show;
   margin-bottom: 10px;
+	border-radius:5px;
 	border-right:1px solid #7b0c0c;
 	border-bottom:1px solid #7b0c0c;
 	border-left:1px solid #d22c2c;
