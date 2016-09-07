@@ -6,6 +6,13 @@ var diceImages = ['images/dice_one.png', 'images/dice_two.png', 'images/dice_thr
 var scoreOptions = ['Ones', 'Twos', 'Threes', 'Fours' , 'Fives', 'Sixes', '3 of a Kind', '4 of a Kind', 'Full House', 'Small Straight', 'Large Straight', 'YachtZoe', 'Chance'];
 
 var thePlayers;
+var dice = [];          // array of rolled dice.
+var numberOfRolls = 0;  // current number of rolls
+var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
+var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// dummied data for totalling.
+var dummyScores = [];
 
 // global variables used as local storage keys
 var savedGameDataKey = 'SavedGameInfo';
@@ -89,10 +96,6 @@ saveButton.addEventListener('click', addScoreLocal());
 
 
 // this is where a set of dice is rolled to get random values.
-var dice = [];          // array of rolled dice.
-var numberOfRolls = 0;  // current number of rolls
-var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
-var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // generate the initial score table
 createScoreTable();
@@ -369,6 +372,16 @@ function chooseScore(e) {
 
 function endOfGame () {
   // do end of game actions here.....
+
+  // dummy the data...
+  dummyScores.push(new Scores('Jane'));
+  dummyScores.push(new Scores('WTF'));
+  for (var idx = 0; idx < dummyScores.length; idx++) {
+    for (var scIdx = 0; scIdx < 13; scIdx++) {
+      dummyScores[idx].score[scIdx] = scIdx + 5;
+    };
+  };
+
   totalPlayersScores();
 }
 
@@ -379,15 +392,16 @@ function totalPlayersScores() {
   var playerTotal = 0;
   var footTotal;
   for (var i = 0; i < thePlayers.length; i++) {
+    playerTotal = 0;  // start each player with a zero total.
     if (i > 0) idForPlayer = 'player_two_total';
     footTotal = document.getElementById(idForPlayer);
-    for (var s = 0; s < thePlayers.score.length; s++) {
-      playerTotal += thePlayers.score[s][1];
+    for (var s = 0; s < dummyScores[i].score.length; s++) {
+      playerTotal += dummyScores[i].score[s];
     };
     footTotal.textContent = playerTotal;
 
     // also put that data into local storage.
-    addScoreToHistory(thePlayers[i].name, playerTotal);
+    addScoreToHistory(dummyScores[i].name, playerTotal);
   };
 
 }
