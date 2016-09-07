@@ -50,7 +50,7 @@ table {
 body {
   width: 960px;
 	margin:0 auto;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 }
 
 a {
@@ -83,9 +83,12 @@ h1, h2, h3 {
 nav {
 	background-color:#a41010;
 	padding:15px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 	color:#FFF;
+	border-right:5px solid #7b0c0c;
 	border-bottom:5px solid #7b0c0c;
+	border-left:2px solid #7b0c0c;
+	border-top:2px solid #d22c2c;
 }
 
 .navLink {
@@ -127,7 +130,7 @@ nav {
 
 .indexBranding {
 	font-family: 'Revue', sans-serif;
-	font-size: 60px;
+	font-size: 82px;
 	text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
 	-webkit-transform: rotate(-10deg);
 }
@@ -160,6 +163,29 @@ nav {
 	margin-left:15px;
 }
 
+.play_button_style {
+	width:150px;
+	height:50px;
+	background-color:#a41010;
+	font-family:'Lobster', cursive;
+	font-size:20px;
+	color:#FFF;
+	border-radius:5px;
+	border-right:3px solid #7b0c0c;
+	border-bottom:3px solid #7b0c0c;
+	border-left:3px solid #7b0c0c;
+	border-top:3px solid #d22c2c;
+}
+
+.play_button_style:active {
+	width:150px;
+	height:50px;
+	border-right:none;
+	border-bottom:none;
+	border-left:3px solid #7b0c0c;
+	border-top:3px solid #7b0c0c;
+}
+
 .footer {
 	width:600px;
 	text-align:center;
@@ -172,14 +198,20 @@ nav {
 	height: 800px;
 }
 
+.score_table_title {
+	font-size:32px;
+	width:200px;
+	margin-left:80px;
+}
+
 .score_table_div {
 	width: 400px;
 	margin-top:10px;
+	padding-left:10px;
 	float: left;
 }
 
 .game_scores table {
-  border: 1px solid black;
   width: 350px;
   margin-left: 0px;
   empty-cells: show;
@@ -187,32 +219,36 @@ nav {
 }
 
 .game_scores th, td {
-  border: 1px solid black;
+  border: 1px solid white;
   border-spacing: 0px;
 }
 
 .game_scores th {
   font-weight: bold;
-  font-family: Verdana, sans-serif;
+  font-family: 'Raleway', sans-serif;
+	background-color:#eba1a1;
 }
 
 .game_scores thead th {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   text-align: center;
-	font-family:'Lobster', cursive;
+	font-family:'Raleway', sans-serif;
   width: auto;
 }
 
 .game_scores tr th{
-  border-bottom: 1px solid black;
-	border-right: 1px solid black;
-	font-family:'Revue', cursive;
-  font-size: 20px;
+	font-family: 'Raleway', sans-serif;
+  font-size: 16px;
   width: 200px;
 }
 
 .game_scores td {
-  text-align: right;
+  text-align: center;
+	background-color:#f5d0d0;
+}
+
+.game_scores td:hover {
+	background-color:#FFF;
 }
 
 .game_scores tfoot {
@@ -279,6 +315,11 @@ input.hold_dice {
 	margin: 5px;
 }
 
+.game_hold_title {
+	font-family:'Raleway', sans-serif;
+	font-weight:bold;
+}
+
 #roll_dice {
 	/* button to roll dice */
 	width: 150px;
@@ -294,10 +335,34 @@ input.hold_dice {
 	font-size: 18px;
 }
 
+.game_button_style {
+	width:150px;
+	height:50px;
+	background-color:#a41010;
+	font-family:'Lobster', cursive;
+	font-size:20px;
+	color:#FFF;
+	border-radius:5px;
+	border-right:3px solid #7b0c0c;
+	border-bottom:3px solid #7b0c0c;
+	border-left:3px solid #7b0c0c;
+	border-top:3px solid #d22c2c;
+}
+
+.game_button_style:active {
+	width:150px;
+	height:50px;
+	border-right:none;
+	border-bottom:none;
+	border-left:3px solid #7b0c0c;
+	border-top:3px solid #7b0c0c;
+}
+
 footer {
 	clear: left;
 	width: 250px;
 	margin: 150px auto;
+	padding-top:20px;
 }
 
 /*about page styling */
@@ -315,25 +380,38 @@ footer {
 }
 
 table {
-	width: 200px;
+	width: 300px;
 	display: block;
 	margin: 0 auto;
 }
 
 tr {
 	margin-top: 10px;
+	border:1px solid #FFF;
 }
 
 th {
 	text-align: center;
-	width: 100px;
+	width: 150px;
+	padding:5px;
 	font-size: 22px;
+	font-weight:800;
+	background-color:#f0b8b8;
+	border:1px solid #FFF
 }
 
 td {
 	width: 100px;
 	font-size: 20px;
-	padding: 5px 0 5px 30px;
+	padding: 10px;
+	text-align:center;
+	border:1px solid #FFF;
+	background-color:#fae7e7;
+}
+
+td:hover {
+	background-color:#FFF;
+	font-weight:bold;
 }
 
 hr {
@@ -343,6 +421,7 @@ hr {
 
 .about {
 	width: 600px;
+	font-family:'Raleway', sans-serif;
 }
 
 .about h2 {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css" >
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Lobster" rel="stylesheet">
     <title>The Original YachtZoe!</title>
   </head>
   <body>
@@ -21,7 +21,7 @@
       </nav>
     </header>
     <div class="score_table_div">
-      <h1>The Score Table</h1>
+      <h1 class="score_table_title">The Score Table</h1>
       <br>
       <main id="the_scores" class="game_scores">
         <!-- <img src="http://placehold.it/350x500" alt="" /> -->
@@ -29,6 +29,7 @@
     </div>
     <div class="dice_area">
         <h1 id="turn"></h1>
+        <br>
         <div class="dice_display">
           <ul id="dice_array">
             <li class="the_dice"><img src="images/dice_one.png" alt="" /></li>
@@ -39,7 +40,7 @@
           </ul>
 
           <div id="hold_dice_array" class="hide_me">
-            <h3>Check box to Hold the dice:</h3>
+            <h3 class="game_hold_title">Check box to Hold the dice:</h3>
             <div class="hold_cboxes">
               <input type="checkbox" id="cbox1" class="hold_dice">
               <input type="checkbox" id="cbox2" class="hold_dice">
@@ -49,8 +50,8 @@
             </div>
           </div>
         </div>
-        <button type="button" name="button" id="roll_dice">ROLL!</button>
-        <button type="button" name="button" id="save_progress">Save Progress</button>
+        <button type="button" name="button" id="roll_dice" class="game_button_style">Roll!</button>
+        <button type="button" name="button" id="save_progress" class="game_button_style">Save Progress</button>
         </div>
     <footer class="footer">&copy; 2016 The Original YachtZoe! Team</footer>
 
