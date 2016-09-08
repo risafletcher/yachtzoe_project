@@ -124,7 +124,6 @@ nav {
 .branding {
 	font-family: 'Revue', sans-serif;
 	-webkit-transform: rotate(-10deg);
-	margin-right:10px;
 }
 
 /* CSS shadow effect from http://codepen.io/ThatGuySam/pen/CytDA */
@@ -218,8 +217,8 @@ nav {
   empty-cells: show;
   margin-bottom: 10px;
 	border-radius:5px;
-	border-right:1px solid #7b0c0c;
-	border-bottom:1px solid #7b0c0c;
+	border-right:1px solid #ca6666;
+	border-bottom:1px solid #ca6666;
 	border-left:1px solid #d22c2c;
 	border-top:1px solid #d22c2c;
 }
@@ -396,6 +395,11 @@ table {
 	width: 300px;
 	display: block;
 	margin: 0 auto;
+	border-radius:5px;
+	border-right:1px solid #ca6666;
+	border-bottom:1px solid #ca6666;
+	border-left:1px solid #d22c2c;
+	border-top:1px solid #d22c2c;
 }
 
 tr {
@@ -407,10 +411,14 @@ th {
 	text-align: center;
 	width: 150px;
 	padding:5px;
-	font-size: 22px;
+	font-size: 18px;
+	color:#FFF;
 	font-weight:800;
-	background-color:#f0b8b8;
-	border:1px solid #FFF
+	background-color:#a41010;
+	border-top:1px solid #a41010;
+	border-left:1px solid #a41010;
+	border-right:1px solid #a41010;
+	border-bottom:1px solid #ad2727;
 }
 
 td {
@@ -418,8 +426,8 @@ td {
 	font-size: 20px;
 	padding: 10px;
 	text-align:center;
-	border:1px solid #FFF;
-	background-color:#fae7e7;
+	background-color:#e17272;
+	border:1px solid #e68a8a;
 }
 
 td:hover {
@@ -438,8 +446,13 @@ hr {
 }
 
 .about h2 {
-	font-size: 25px;
+	font-size: 30px;
 	text-align: center;
+}
+
+.dev_name {
+	font-family:'Lobster', cursive;
+	font-size:24px;
 }
 
 .about p {
@@ -454,4 +467,45 @@ hr {
 	margin-top: 30px;
 	vertical-align: top;
 	height:300px;
+	width:200px;
+}
+
+.instructions_title {
+	margin-top:20px;
+	text-align:center;
+	font-size:30px;
+	margin-bottom:20px;
+}
+
+.instructions {
+	width:600px;
+}
+
+.combo_instructions {
+	width:600px;
+	background-color:#a41010;
+	margin-top:20px;
+}
+
+.combo_instructions th {
+	width:500px;
+}
+
+.combo_instructions td {
+	font-size:16px;
+}
+
+td.kind {
+	font-size:18px;
+	font-weight:800;
+	vertical-align: middle;
+}
+
+.combo_instructions td:hover {
+	background-color:#e17272;
+	text-decoration:none;
+}
+
+.branding_notilt {
+	font-family: 'Revue', sans-serif;
 }
