@@ -82,7 +82,7 @@ if(savedGamesArray === null) {
   console.log('there are saved games');
   for(i = 0; i < savedGamesArray.length; i++) {
     if(currentPlayerCheck === savedGamesArray[i].name) {
-      var loadGameAnswer = prompt('You have a saved game. Would you like to resume it');
+      var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
       loadGameAnswer = loadGameAnswer.toLowerCase();
       console.log(loadGameAnswer);
 
@@ -96,11 +96,11 @@ if(savedGamesArray === null) {
         }
         console.log(gameScores);
         break;
-      } else if (loadGameAnswer === 'no' || loadGameAnswer === 'no') {
-        alert('Your old game will be overwritten');
+      } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
+        alert('Warning your old game will be overwritten when you make another save');
+      } else {
+        alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
       }
-    } else {
-      alert('there is no saved game');
     }
   }
 }
