@@ -195,12 +195,6 @@ nav {
 	border-top:3px solid #7b0c0c;
 }
 
-.footer {
-	width:600px;
-	text-align:center;
-	font-family:'Lobster', cursive;
-}
-
 /*  Game page styling  */
 .main_game {
 	width: 960px;
@@ -393,10 +387,15 @@ input.hold_dice {
 }
 
 footer {
-	clear: left;
-	width: 250px;
-	margin: 150px auto;
-	padding-top:20px;
+	width: 960px;
+	text-align:center;
+	margin-top:50px;
+	margin-bottom:20px;
+}
+
+.footer {
+	vertical-align: bottom;
+	font-family:'Lobster', cursive;
 }
 
 /*about page styling */

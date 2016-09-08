@@ -440,7 +440,19 @@ function chooseScore(e) {
 
 function endOfGame () {
   // do end of game actions here.....
-  totalPlayersScores();
+  var winners = totalPlayersScores();
+  var winnerName = gameScores[0].name;
+
+  if (winners.length > 1) {
+    for (var f = 0; f < winners.length - 1; f++) {
+      if (winners[f] > winners[f + 1]) {
+        winnerName = gameScores[f].name;
+      } else {
+        winnerName = gameScores[f + 1].name;
+      }
+    }
+  }
+  alert( winnerName + ' wins!');
 }
 
 function totalPlayersScores() {
@@ -449,6 +461,7 @@ function totalPlayersScores() {
   var idForPlayer = 'player_one_total';
   var playerTotal = 0;
   var footTotal;
+  var winner = [];
 
   for (var i = 0; i < gameScores.length; i++) {
     playerTotal = 0;  // start each player with a zero total.
@@ -461,8 +474,9 @@ function totalPlayersScores() {
 
     // also put that data into local storage.
     addScoreToHistory(gameScores[i].name, playerTotal);
+    winner.push(playerTotal);
   };
-
+  return winner;
 }
 
 // store completed game data for use by leaderboard...
