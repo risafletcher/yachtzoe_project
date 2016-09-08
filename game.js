@@ -11,8 +11,6 @@ var numberOfRolls = 0;  // current number of rolls
 var maxNbrRolls = 3;    // maximum number of times a player can roll the dice.
 var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-// dummied data for totalling.
-var dummyScores = [];
 
 // global variables used as local storage keys
 var savedGameDataKey = 'SavedGameInfo';
@@ -417,16 +415,6 @@ function chooseScore(e) {
 
 function endOfGame () {
   // do end of game actions here.....
-  //
-  // // dummy the data...
-  // dummyScores.push(new Scores('Jane'));
-  // dummyScores.push(new Scores('WTF'));
-  // for (var idx = 0; idx < dummyScores.length; idx++) {
-  //   for (var scIdx = 0; scIdx < 13; scIdx++) {
-  //     dummyScores[idx].score[scIdx] = scIdx + 5;
-  //   };
-  // };
-
   totalPlayersScores();
 }
 
@@ -467,7 +455,9 @@ function addScoreToHistory (playerName, playerScore) {
   //retrieving stored scores and parsing back into array of objects
   var oldScores = [];
   var retrievedHistory = localStorage.getItem(oldScoresKey);
-  oldScores = JSON.parse(retrievedHistory);
+  if (!(!retrievedHistory)) {
+    oldScores = JSON.parse(retrievedHistory);
+  }
 
   var latestScore = new OldScores(playerName, playerScore);
   oldScores.push(latestScore);
