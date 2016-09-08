@@ -262,6 +262,8 @@ nav {
   text-align: center;
 	background-color:#e17272;
 	border:1px solid #e68a8a;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .game_scores td:hover {
@@ -291,8 +293,15 @@ nav {
 	cursor: default;
 }
 
-.already_scored {
-	color: blue;
+td.already_scored {
+	color: white;
+	background-color: #eba1a1;;
+}
+
+td.already_scored:hover {
+	background-color: #eba1a1;;
+	font-size: 20px;
+	font-weight: normal;
 }
 
 /* ============================ */

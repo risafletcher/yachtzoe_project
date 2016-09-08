@@ -273,7 +273,7 @@ function createScoreTable () {
 
   for (var p = 0; p < thePlayers.length; p++) {
     var playerHdr = document.createElement('th');
-    playerHdr.textContent = thePlayers[p];
+    playerHdr.textContent = thePlayers[p].substring(0, 7);
     headerRow.appendChild(playerHdr);
   }
 
@@ -400,10 +400,7 @@ function chooseScore(e) {
   var roundScore = parseInt(click);
   var rowNumber = e.target.getAttribute('id');
   var scoreIndex = parseInt(rowNumber);
-  // var cell = document.getElementById(rowNumber);
 
-  // console.log(cell);
-  console.log(gameScores[playerTurn].score[scoreIndex]);
   gameScores[playerTurn].score[scoreIndex].push(roundScore);
 
   //makes sure that the other players cells are not clickable and do not look clickable
