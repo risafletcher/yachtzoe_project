@@ -329,7 +329,7 @@ function updateScoreTable() {
   var otherColumn;
 
   if(thePlayers.length === 1){
-    for(var i = 0; i < scoreOptions.length; i++) {
+    for(i = 0; i < scoreOptions.length; i++) {
       playerOneColumn[i].setAttribute('id', i);
       if(gameScores[playerTurn].score[i].length === 1) {
         playerOneColumn[i].textContent = potentialScores[i];
@@ -348,7 +348,7 @@ function updateScoreTable() {
       currentColumn = playerTwoColumn;
       otherColumn = playerOneColumn;
     }
-    for( i = 0; i < scoreOptions.length; i++) {
+    for(i = 0; i < scoreOptions.length; i++) {
       var scoreCell = currentColumn[i];
       scoreCell.setAttribute('id', i);
 
@@ -379,11 +379,11 @@ function updateScoreTable() {
 function chooseScore(e) {
   var click = e.target.textContent;
   var roundScore = parseInt(click);
-  // var playerOneColumn = document.getElementsByClassName('player_one');
-  // var playerTwoColumn = document.getElementsByClassName('player_two');
-
   var rowNumber = e.target.getAttribute('id');
   var scoreIndex = parseInt(rowNumber);
+  // var cell = document.getElementById(rowNumber);
+
+  // console.log(cell);
   console.log(gameScores[playerTurn].score[scoreIndex]);
   gameScores[playerTurn].score[scoreIndex].push(roundScore);
 
@@ -393,10 +393,19 @@ function chooseScore(e) {
     disableElt.removeEventListener('click', chooseScore);
 
     if(playerTurn === 0) {
-      disableElt.setAttribute('class', 'player_one not_clickable');
+      if(gameScores[0].score[i].length === 1) {
+        disableElt.setAttribute('class', 'player_one not_clickable');
+      } else {
+        disableElt.setAttribute('class', 'player_one not_clickable already_scored');
+      }
     } else {
-      disableElt.setAttribute('class', 'player_two not_clickable');
+      if(gameScores[1].score[i].length === 1) {
+        disableElt.setAttribute('class', 'player_two not_clickable');
+      } else {
+        disableElt.setAttribute('class', 'player_two not_clickable already_scored');
+      }
     }
+
     disableElt.removeAttribute('id');
   }
 

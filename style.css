@@ -282,6 +282,10 @@ nav {
 	cursor: default;
 }
 
+.already_scored {
+	color: blue;
+}
+
 /* ============================ */
 
 #the_scores {
