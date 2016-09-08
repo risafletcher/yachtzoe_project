@@ -16,6 +16,8 @@ var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var savedGameDataKey = 'SavedGameInfo';
 var storedPlayerKey = 'players';
 var oldScoresKey = 'oldScores';
+//creating score objects for players and storing them in an array
+var gameScores = [];
 
 getPlayerInfo();
 
@@ -46,13 +48,66 @@ SaveGame.prototype.loadData = function (passedPlayerData) {
   };
 };
 
-//creating score objects for players and storing them in an array
-var gameScores = [];
 
 for(var i = 0; i < thePlayers.length; i++) {
   var user = new Scores(thePlayers[i]);
   gameScores.push(user);
 }
+
+//check if there are saved games got the same users
+
+//put thePlayers array in the form of SavedGameInfo name
+var currentPlayerCheck;
+
+if(thePlayers.length === 1){
+  currentPlayerCheck = gameScores[0].name;
+} else {
+  currentPlayerCheck = gameScores[0].name + ' and ' + gameScores[1].name;
+}
+
+console.log(currentPlayerCheck);
+
+var savedGamesString = localStorage.getItem(savedGameDataKey);
+console.log(savedGamesString);
+
+var savedGamesArray = JSON.parse(savedGamesString);
+
+console.log(savedGamesArray);
+
+//check to see if annything is in saved games array
+
+if(savedGamesArray === null) {
+  console.log('there are no saved games');
+} else {
+  console.log('there are saved games');
+  for(i = 0; i < savedGamesArray.length; i++) {
+    if(currentPlayerCheck === savedGamesArray[i].name) {
+      var loadGameAnswer = prompt('You have a saved game. Would you like to resume it');
+      loadGameAnswer = loadGameAnswer.toLowerCase();
+      console.log(loadGameAnswer);
+
+      if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
+        alert('Your game is loading');
+        gameScores = [];
+
+        //function to load past game
+        for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
+          gameScores.push(savedGamesArray[i].playerData[j]);
+        }
+        console.log(gameScores);
+        break;
+      } else if (loadGameAnswer === 'no' || loadGameAnswer === 'no') {
+        alert('Your old game will be overwritten');
+      }
+    } else {
+      alert('there is no saved game');
+    }
+  }
+}
+
+
+
+
 
 // generate the initial score table
 createScoreTable();
