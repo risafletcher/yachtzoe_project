@@ -1,35 +1,14 @@
 'use strict';
 
 //in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
-
 var oldScoresKey = 'oldScores';
 
-function OldScores (name, score) {
-  this.playerName = name;
-  this.gameScore = score;
-  this.gameTime;
-}
-
-//this array of score objects is being used a placeholder for the time being
-var pastScores = [];
-pastScores.push(new OldScores('Jane', 100));
-pastScores.push(new OldScores('cat', 5000));
-pastScores.push(new OldScores('Will', 100));
-pastScores.push(new OldScores('John', 300));
-pastScores.push(new OldScores('Risa', 1000));
-pastScores.push(new OldScores('Bill', 400));
-pastScores.push(new OldScores('Will', 1200));
-
-//
-// pastScores = [{name: 'cat', score: 5000}, {name:'Will', score: 10}, {name: 'John', score: 300}, {name: 'Risa', score: 200}, {name: 'Bill', score: 400}];
-
-//putting dummy array into local storage
-var scoresString = JSON.stringify(pastScores);
-localStorage.setItem(oldScoresKey, scoresString);
-
+var oldScores = [];
 //retrieving stored scores and parsing back into array of objects
 var retrievedScores = localStorage.getItem(oldScoresKey);
-var scores = JSON.parse(retrievedScores);
+if (!(!retrievedScores)) {
+  oldScores = JSON.parse(retrievedScores);
+};
 
 //this var stores the top score objects
 var leaderBoard = [];
@@ -39,7 +18,7 @@ renderTable();
 
 //sorts scores and puts them in leaderBoard array in the right order.
 function calcTopScores() {
-  leaderBoard = scores;
+  leaderBoard = oldScores;
 
   // sort high scores to beginning of the array.
   leaderBoard.sort(function(a,b) {
@@ -73,7 +52,9 @@ function renderTable() {
   scoreBoard.appendChild(table);
 
   //using data from leaderBoard to create table rows
-  for(var i = 0; i < 3; i++){
+  var maxEntries = 3;
+  if (leaderBoard.length < maxEntries) maxEntries = leaderBoard.length;
+  for(var i = 0; i < maxEntries; i++) {
     //creating the row elements
     var tableRow = document.createElement('tr');
     var leaderName = document.createElement('td');
