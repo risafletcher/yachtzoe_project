@@ -34,6 +34,19 @@ function Scores (name) {
   this.score = [['Ones'], ['Twos'], ['Threes'], ['Fours'], ['Fives'], ['Sixes'], ['3 of a Kind'], ['4 of a Kind'], ['Full House'], ['Small Straight'], ['Large Straight'], ['YachtZoe'], ['Chance']];
 }
 
+function SaveGame() {
+  this.name = '',
+  this.playerData = [];
+}
+
+SaveGame.prototype.loadData = function (passedPlayerData) {
+  for (var p = 0; p < passedPlayerData.length; p++) {
+    if (this.name.length > 0) this.name += ' and ';
+    this.name += passedPlayerData[p].name;
+    this.playerData.push(passedPlayerData[p]);
+  };
+};
+
 //creating score objects for players and storing them in an array
 var gameScores = [];
 
@@ -78,34 +91,40 @@ function uncheckBoxes() {
   }
 }
 
-
-var savedScores = [];
-// savedScores.push(new Scores('Will'));
-
-var scoresDataString = JSON.stringify(savedScores);
-localStorage.setItem(pastScoresKey, scoresDataString);
-
-function addScoreLocal (name) {
-  var retrievedScores = localStorage.getItem('pastScores');
-  var lastScore = JSON.parse(retrievedScores);
-
-  var newScore = new Scores(name);
-  lastScore.push(newScore);
-
-  var newScoreString = JSON.stringify(lastScore);
-  localStorage.setItem(pastScoresKey, newScoreString);
-};
-
 var saveButton = document.getElementById('save_progress');
 
-saveButton.addEventListener('click', addScoreLocal());
+saveButton.addEventListener('click', saveGameProgress);
 
+function saveGameProgress () {
+  debugger;
+  var oldGames = [];
+  var retrievedScores = localStorage.getItem(savedGameDataKey);
+  if (!retrievedScores) {
+    // no data was retrieved...
+    oldGames = [];
+  } else {
+    oldGames = JSON.parse(retrievedScores);
+  };
 
-// this is where a set of dice is rolled to get random values.
+  // create Game object to store
+  var newGameToSave = createGameObjectToStore();
+
+  oldGames.push(newGameToSave);
+
+  var newScoreString = JSON.stringify(oldGames);
+  localStorage.setItem(savedGameDataKey, newScoreString);
+};
+
+function createGameObjectToStore () {
+  var newGame = new SaveGame();
+  newGame.loadData(gameScores);
+  return newGame;
+};
 
 // generate the initial score table
 createScoreTable();
 
+// this is where a set of dice is rolled to get random values.
 // Initial roll for a turn, gets all 5 dice.
 var rollButton = document.getElementById('roll_dice');
 
@@ -329,7 +348,7 @@ function updateScoreTable() {
   var otherColumn;
 
   if(thePlayers.length === 1){
-    for(i = 0; i < scoreOptions.length; i++) {
+    for(var i = 0; i < scoreOptions.length; i++) {
       playerOneColumn[i].setAttribute('id', i);
       if(gameScores[playerTurn].score[i].length === 1) {
         playerOneColumn[i].textContent = potentialScores[i];
