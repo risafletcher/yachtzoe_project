@@ -80,6 +80,11 @@ h1, h2, h3 {
 	font-family:'Lobster', cursive;
 }
 
+.logolink:hover {
+	color:#FFF;
+	font-weight:normal;
+}
+
 nav {
 	background-color:#a41010;
 	padding:15px;
@@ -138,6 +143,10 @@ nav {
 .inputcontainer {
 	width:300px;
 	clear: both;
+}
+
+.howmany {
+	font-weight:900;
 }
 
 .player_info {
@@ -482,11 +491,11 @@ hr {
 }
 
 .instructions {
-	width:600px;
+	width:800px;
 }
 
 .combo_instructions {
-	width:600px;
+	width:800px;
 	background-color:#a41010;
 	margin-top:20px;
 }
