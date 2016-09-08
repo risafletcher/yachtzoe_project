@@ -15,7 +15,6 @@ var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 // global variables used as local storage keys
 var savedGameDataKey = 'SavedGameInfo';
 var storedPlayerKey = 'players';
-var pastScoresKey = 'pastScores';
 var oldScoresKey = 'oldScores';
 
 getPlayerInfo();
@@ -54,6 +53,9 @@ for(var i = 0; i < thePlayers.length; i++) {
   var user = new Scores(thePlayers[i]);
   gameScores.push(user);
 }
+
+// generate the initial score table
+createScoreTable();
 
 //used to keep track of how many turns have passed(may be usefull in determining when to end the game)
 var turnCounter = 0;
@@ -96,7 +98,6 @@ var saveButton = document.getElementById('save_progress');
 saveButton.addEventListener('click', saveGameProgress);
 
 function saveGameProgress () {
-  debugger;
   var oldGames = [];
   var retrievedScores = localStorage.getItem(savedGameDataKey);
   if (!retrievedScores) {
@@ -108,6 +109,9 @@ function saveGameProgress () {
 
   // create Game object to store
   var newGameToSave = createGameObjectToStore();
+
+  // check for an old saved game and remove it.
+  checkForOldSavedGame(oldGames, newGameToSave.name, true);
 
   oldGames.push(newGameToSave);
 
@@ -121,8 +125,20 @@ function createGameObjectToStore () {
   return newGame;
 };
 
-// generate the initial score table
-createScoreTable();
+function checkForOldSavedGame(priorGames, newGameName, flag) {
+  var returnArray = priorGames;
+  for (var k = 0; k < priorGames.length; k++) {
+    if (priorGames[k].name === newGameName) {
+      // there is a saved game
+      if (flag) {
+        // remove the existing game
+        returnArray = priorGames.splice(k, 1);
+      };
+    };
+  };
+  return returnArray;
+}
+
 
 // this is where a set of dice is rolled to get random values.
 // Initial roll for a turn, gets all 5 dice.
