@@ -16,6 +16,8 @@ var potentialScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var savedGameDataKey = 'SavedGameInfo';
 var storedPlayerKey = 'players';
 var oldScoresKey = 'oldScores';
+//creating score objects for players and storing them in an array
+var gameScores = [];
 
 getPlayerInfo();
 
@@ -27,6 +29,8 @@ function getPlayerInfo () {
 
 //this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
 var playerTurn = 0;
+//used to keep track of how many turns have passed(may be usefull in determining when to end the game)
+var turnCounter = 0;
 
 function Scores (name) {
   this.name = name,
@@ -46,19 +50,135 @@ SaveGame.prototype.loadData = function (passedPlayerData) {
   };
 };
 
-//creating score objects for players and storing them in an array
-var gameScores = [];
 
 for(var i = 0; i < thePlayers.length; i++) {
   var user = new Scores(thePlayers[i]);
   gameScores.push(user);
 }
 
+//check if there are saved games got the same users
+
+//put thePlayers array in the form of SavedGameInfo name
+var currentPlayerCheck;
+
+if(thePlayers.length === 1){
+  currentPlayerCheck = gameScores[0].name;
+} else {
+  currentPlayerCheck = gameScores[0].name + ' and ' + gameScores[1].name;
+}
+
+var savedGamesString = localStorage.getItem(savedGameDataKey);
+
+var savedGamesArray = JSON.parse(savedGamesString);
+
+
+//check to see if annything is in saved games array
+
+function checkForSavedGames() {
+  if(savedGamesArray === null) {
+  } else {
+    for(i = 0; i < savedGamesArray.length; i++) {
+      if(currentPlayerCheck === savedGamesArray[i].name) {
+        var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
+        loadGameAnswer = loadGameAnswer.toLowerCase();
+
+
+        var newScoreString;
+        if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
+          gameScores = [];
+          for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
+            gameScores.push(savedGamesArray[i].playerData[j]);
+          }
+          whoseTurnIsIt();
+          showAlreadyScored();
+          // delete the saved game so they cannot start there again, over and over
+          // remove an old saved game.
+          checkForOldSavedGame(savedGamesArray, currentPlayerCheck, true);
+          // saved game removed from array, now put any remaining game data back
+          newScoreString = JSON.stringify(savedGamesArray);
+          localStorage.setItem(savedGameDataKey, newScoreString);
+          break;
+        } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
+          alert('Warning your old game will be overwritten when you make another save');
+          // remove an old saved game.
+          checkForOldSavedGame(savedGamesArray, currentPlayerCheck, true);
+          // saved game removed from array, now put any remaining game data back
+          newScoreString = JSON.stringify(savedGamesArray);
+          localStorage.setItem(savedGameDataKey, newScoreString);
+
+          break;
+        } else {
+          alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
+        }
+      }
+    }
+  }
+}
+
+
+//function to change class of already saved scores.
+function showAlreadyScored() {
+  var columnOne = document.getElementsByClassName('player_one');
+  var columnTwo = document.getElementsByClassName('player_two');
+
+  //renders the already chosen scores for the first column
+  for(var i = 0; i < scoreOptions.length; i++){
+    if(gameScores[0].score[i].length > 1) {
+      columnOne[i].textContent = gameScores[0].score[i][1];
+      columnOne[i].setAttribute('class', 'player_one already_scored');
+    } else {
+      // columnOne[i].textContent = 0;
+    }
+  }
+  if(thePlayers.length === 2) {
+    //renders already chosen score for the seccond column
+    for(i = 0; i < scoreOptions.length; i++) {
+      if(gameScores[1].score[i].length > 1) {
+        columnTwo[i].textContent = gameScores[1].score[i][1];
+        columnTwo[i].setAttribute('class', 'player_two already_scored');
+      } else {
+        // columnOne[i].textContent = 0;
+      }
+    }
+  }
+}
+
+function whoseTurnIsIt () {
+  // starting from a set of players  playerTurn turnCounter
+  var turnsCompleted = [];
+  var simpleCount = 0;
+  for (var idx = 0; idx < gameScores.length; idx++) {
+    simpleCount = 0;
+    for (var idx2 = 0; idx2 < gameScores[idx].score.length; idx2++) {
+      if (gameScores[idx].score[idx2].length > 1){
+        simpleCount += 1;  // these are the scores that already exist.
+      }
+    }
+    turnsCompleted.push(simpleCount);
+  }
+
+  // now set the currentplayer based on what we found
+  if(gameScores.length > 1 ) {
+    if (turnsCompleted[0] > turnsCompleted[1]) {
+      playerTurn = 1;
+    } else {
+      playerTurn = 0;
+    };
+    // also reset the turn counter
+    turnCounter = turnsCompleted[0] + turnsCompleted[1];
+  } else {
+    playerTurn = 0;
+    turnCounter = turnsCompleted[0];
+  }
+};
+
+
+
 // generate the initial score table
 createScoreTable();
 
-//used to keep track of how many turns have passed(may be usefull in determining when to end the game)
-var turnCounter = 0;
+//check for saved games with same player and load there game data
+checkForSavedGames();
 
 //calling turn function to begin first turn
 turn();
@@ -100,7 +220,7 @@ saveButton.addEventListener('click', saveGameProgress);
 function saveGameProgress () {
   var oldGames = [];
   var retrievedScores = localStorage.getItem(savedGameDataKey);
-  if (!retrievedScores) {
+  if (retrievedScores === null) {
     // no data was retrieved...
     oldGames = [];
   } else {
@@ -114,9 +234,10 @@ function saveGameProgress () {
   checkForOldSavedGame(oldGames, newGameToSave.name, true);
 
   oldGames.push(newGameToSave);
-
+  // put the new data back
   var newScoreString = JSON.stringify(oldGames);
   localStorage.setItem(savedGameDataKey, newScoreString);
+  alert('Your game was saved!');
 };
 
 function createGameObjectToStore () {
@@ -125,6 +246,8 @@ function createGameObjectToStore () {
   return newGame;
 };
 
+// checks saved game array for a specific game name (first two arguments).
+// 'flag' argument (boolean) will control whether to delete the saved game or not.
 function checkForOldSavedGame(priorGames, newGameName, flag) {
   var returnArray = priorGames;
   for (var k = 0; k < priorGames.length; k++) {
@@ -132,7 +255,8 @@ function checkForOldSavedGame(priorGames, newGameName, flag) {
       // there is a saved game
       if (flag) {
         // remove the existing game
-        returnArray = priorGames.splice(k, 1);
+        priorGames.splice(k, 1);
+        returnArray = priorGames;
       };
     };
   };
