@@ -29,6 +29,8 @@ function getPlayerInfo () {
 
 //this variable keeps track of whose turn it is (0 means first player, 1 means seccond).
 var playerTurn = 0;
+//used to keep track of how many turns have passed(may be usefull in determining when to end the game)
+var turnCounter = 0;
 
 function Scores (name) {
   this.name = name,
@@ -76,44 +78,99 @@ console.log(savedGamesArray);
 
 //check to see if annything is in saved games array
 
-if(savedGamesArray === null) {
-  console.log('there are no saved games');
-} else {
-  console.log('there are saved games');
-  for(i = 0; i < savedGamesArray.length; i++) {
-    if(currentPlayerCheck === savedGamesArray[i].name) {
-      var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
-      loadGameAnswer = loadGameAnswer.toLowerCase();
-      console.log(loadGameAnswer);
+function checkForSavedGames() {
+  if(savedGamesArray === null) {
+    console.log('there are no saved games');
+  } else {
+    console.log('there are saved games');
+    for(i = 0; i < savedGamesArray.length; i++) {
+      if(currentPlayerCheck === savedGamesArray[i].name) {
+        var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
+        loadGameAnswer = loadGameAnswer.toLowerCase();
+        console.log(loadGameAnswer);
 
-      if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
-        alert('Your game is loading');
-        gameScores = [];
-
-        //function to load past game
-        for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
-          gameScores.push(savedGamesArray[i].playerData[j]);
+        if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
+          alert('Hit the "Roll" button to load your game and begin.');
+          gameScores = [];
+          // var rollButton = document.getElementById('roll_dice');
+          // rollButton.addEventListener('click', showAlreadyScored);
+          //function to load past game
+          for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
+            gameScores.push(savedGamesArray[i].playerData[j]);
+          }
+          whoseTurnIsIt();
+          showAlreadyScored();
+          console.log(gameScores);
+          break;
+        } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
+          alert('Warning your old game will be overwritten when you make another save');
+        } else {
+          alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
         }
-        console.log(gameScores);
-        break;
-      } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
-        alert('Warning your old game will be overwritten when you make another save');
-      } else {
-        alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
       }
     }
   }
 }
 
 
+//function to change class of already saved scores.
+function showAlreadyScored() {
+  var columnOne = document.getElementsByClassName('player_one');
+  var columnTwo = document.getElementsByClassName('player_two');
+
+  //renders the already chosen scores for the first column
+  for(var i = 0; i < scoreOptions.length; i++){
+    if(gameScores[0].score[i].length > 1) {
+      columnOne[i].textContent = gameScores[0].score[i][1];
+      columnOne[i].setAttribute = ('class', 'player_one already_scored');
+    } else {
+      // columnOne[i].textContent = 0;
+    }
+  }
+  //renders already chosen score for the seccond column
+  for(i = 0; i < scoreOptions.length; i++) {
+    if(gameScores[1].score[i].length > 1) {
+      columnTwo[i].textContent = gameScores[1].score[i][1];
+      columnTwo[i].setAttribute = ('class', 'player_two already_scored');
+    } else {
+      // columnOne[i].textContent = 0;
+    }
+  }
+}
+
+function whoseTurnIsIt () {
+  // starting from a set of players  playerTurn turnCounter
+  var turnsCompleted = [];
+  var simpleCount = 0;
+  for (var idx = 0; idx < gameScores.length; idx++) {
+    simpleCount = 0;
+    for (var idx2 = 0; idx2 < gameScores[idx].score.length; idx2++) {
+      if (gameScores[idx].score[idx2].length > 1){
+        simpleCount += 1;  // these are the scores that already exist.
+      }
+    }
+    turnsCompleted.push(simpleCount);
+  }
+  console.log('completed turns:', turnsCompleted);
+
+  // now set the currentplayer based on what we found
+  if (turnsCompleted[0] > turnsCompleted[1]) {
+    playerTurn = 1;
+  } else {
+    playerTurn = 0;
+  };
+  // also reset the turn counter
+  turnCounter = turnsCompleted[0] + turnsCompleted[1];
+
+};
 
 
 
 // generate the initial score table
 createScoreTable();
 
-//used to keep track of how many turns have passed(may be usefull in determining when to end the game)
-var turnCounter = 0;
+//check for saved games with same player and load there game data
+// checkForSavedGames();
 
 //calling turn function to begin first turn
 turn();
