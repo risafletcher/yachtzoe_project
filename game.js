@@ -185,32 +185,31 @@ turn();
 
 //this function determines whos turn it is. It renders a message at the top of the dice area and returns an integer that corresponds to the player in thePlayers array;
 function turn() {
-  //insures that the player cannot hold any of the duce from the previous turn
-  var holds = document.getElementById('hold_dice_array');
-  holds.setAttribute('class', 'hide_me');
-
-  //uncheck the previous players boxes
-  uncheckBoxes();
+  //ensures that the player cannot hold any of the duce from the previous turn
 
   //reactivates roll button
   var rollButton = document.getElementById('roll_dice');
   rollButton.disabled = false;
+
+  var tempDice = [];
+  var heldDice = document.getElementsByClassName('fade');
+  console.log(heldDice, heldDice.length);
+
+  for (var tD = 0; tD < heldDice.length; tD++) {
+    tempDice.push(heldDice[tD]);
+  };
+
+  for (var h = 0; h < tempDice.length; h++) {
+    console.log(tempDice[h]);
+    tempDice[h].setAttribute('class', '');
+    console.log(tempDice[h]);
+  };
 
   //decides which player to display at the top of screen
   playerTurn = turnCounter % thePlayers.length;
   var turnAlert = document.getElementById('turn');
   turnAlert.textContent = thePlayers[playerTurn] + '\'s turn';
 
-}
-
-//this function unchecks the previously selected boxes between turns
-function uncheckBoxes() {
-  var boxes = document.getElementsByClassName('hold_dice');
-  for(var i = 0; i < boxes.length; i++){
-    if (boxes[i].checked == true){
-      boxes[i].checked = false;
-    }
-  }
 }
 
 var saveButton = document.getElementById('save_progress');
@@ -270,20 +269,31 @@ var rollButton = document.getElementById('roll_dice');
 
 rollButton.addEventListener('click', rollDiceHandler);
 
+var LIdice = document.getElementsByClassName('the_dice');
+for (var g = 0; g < LIdice.length; g++) {
+  LIdice[g].addEventListener('click', holdDiceAction);
+}
+
+function holdDiceAction() {
+  var diceName = event.target.getAttribute('id');
+  console.log(event.target, diceName);
+  var diceId = document.getElementById(diceName);
+  diceId.classList.toggle('fade');
+}
+
 function rollDiceHandler() {
   // handle the clicks of the roll dice button.
 
-  var holds = document.getElementById('hold_dice_array');
-  holds.setAttribute('class', 'show_me');
   var diceLI = document.getElementsByClassName('the_dice');
-  var holdCBox = document.getElementsByClassName('hold_dice');
 
   for (var d = 0; d < diceLI.length; d++) {
-    if (!holdCBox[d].checked) {
+    var diceImg = document.getElementById('dice' + (d + 1));
+    if (!diceImg.classList.contains('fade')) {
       var randomDie = randomNbrGen();
       diceLI[d].textContent = '';
       var img = document.createElement('img');
       img.setAttribute('src', diceImages[randomDie - 1]);
+      img.setAttribute('id', 'dice' + (d + 1));
       diceLI[d].appendChild(img);
       dice[d] = randomDie;
     } else {
