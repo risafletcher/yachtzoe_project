@@ -82,6 +82,8 @@ function checkForSavedGames() {
         var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
         loadGameAnswer = loadGameAnswer.toLowerCase();
 
+
+        var newScoreString;
         if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
           gameScores = [];
           for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
@@ -89,9 +91,22 @@ function checkForSavedGames() {
           }
           whoseTurnIsIt();
           showAlreadyScored();
+          // delete the saved game so they cannot start there again, over and over
+          // remove an old saved game.
+          checkForOldSavedGame(savedGamesArray, currentPlayerCheck, true);
+          // saved game removed from array, now put any remaining game data back
+          newScoreString = JSON.stringify(savedGamesArray);
+          localStorage.setItem(savedGameDataKey, newScoreString);
           break;
         } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
           alert('Warning your old game will be overwritten when you make another save');
+          // remove an old saved game.
+          checkForOldSavedGame(savedGamesArray, currentPlayerCheck, true);
+          // saved game removed from array, now put any remaining game data back
+          newScoreString = JSON.stringify(savedGamesArray);
+          localStorage.setItem(savedGameDataKey, newScoreString);
+
+          break;
         } else {
           alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
         }
@@ -205,7 +220,7 @@ saveButton.addEventListener('click', saveGameProgress);
 function saveGameProgress () {
   var oldGames = [];
   var retrievedScores = localStorage.getItem(savedGameDataKey);
-  if (!retrievedScores) {
+  if (retrievedScores === null) {
     // no data was retrieved...
     oldGames = [];
   } else {
@@ -219,9 +234,10 @@ function saveGameProgress () {
   checkForOldSavedGame(oldGames, newGameToSave.name, true);
 
   oldGames.push(newGameToSave);
-
+  // put the new data back
   var newScoreString = JSON.stringify(oldGames);
   localStorage.setItem(savedGameDataKey, newScoreString);
+  alert('Your game was saved!');
 };
 
 function createGameObjectToStore () {
@@ -230,6 +246,8 @@ function createGameObjectToStore () {
   return newGame;
 };
 
+// checks saved game array for a specific game name (first two arguments).
+// 'flag' argument (boolean) will control whether to delete the saved game or not.
 function checkForOldSavedGame(priorGames, newGameName, flag) {
   var returnArray = priorGames;
   for (var k = 0; k < priorGames.length; k++) {
@@ -237,7 +255,8 @@ function checkForOldSavedGame(priorGames, newGameName, flag) {
       // there is a saved game
       if (flag) {
         // remove the existing game
-        returnArray = priorGames.splice(k, 1);
+        priorGames.splice(k, 1);
+        returnArray = priorGames;
       };
     };
   };
