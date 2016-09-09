@@ -412,6 +412,10 @@ footer {
 	font-size: 30px;
 }
 
+.fade {
+	opacity:0.6;
+}
+
 table {
 	width: 300px;
 	display: block;
