@@ -200,9 +200,7 @@ function turn() {
   };
 
   for (var h = 0; h < tempDice.length; h++) {
-    console.log(tempDice[h]);
     tempDice[h].setAttribute('class', '');
-    console.log(tempDice[h]);
   };
 
   //decides which player to display at the top of screen
