@@ -67,40 +67,28 @@ if(thePlayers.length === 1){
   currentPlayerCheck = gameScores[0].name + ' and ' + gameScores[1].name;
 }
 
-console.log(currentPlayerCheck);
-
 var savedGamesString = localStorage.getItem(savedGameDataKey);
-console.log(savedGamesString);
 
 var savedGamesArray = JSON.parse(savedGamesString);
 
-console.log(savedGamesArray);
 
 //check to see if annything is in saved games array
 
 function checkForSavedGames() {
   if(savedGamesArray === null) {
-    console.log('there are no saved games');
   } else {
-    console.log('there are saved games');
     for(i = 0; i < savedGamesArray.length; i++) {
       if(currentPlayerCheck === savedGamesArray[i].name) {
         var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
         loadGameAnswer = loadGameAnswer.toLowerCase();
-        console.log(loadGameAnswer);
 
         if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
-          alert('Hit the "Roll" button to load your game and begin.');
           gameScores = [];
-          // var rollButton = document.getElementById('roll_dice');
-          // rollButton.addEventListener('click', showAlreadyScored);
-          //function to load past game
           for(var j = 0; j < savedGamesArray[i].playerData.length; j++) {
             gameScores.push(savedGamesArray[i].playerData[j]);
           }
           whoseTurnIsIt();
           showAlreadyScored();
-          console.log(gameScores);
           break;
         } else if (loadGameAnswer === 'no' || loadGameAnswer === 'n') {
           alert('Warning your old game will be overwritten when you make another save');
@@ -122,18 +110,20 @@ function showAlreadyScored() {
   for(var i = 0; i < scoreOptions.length; i++){
     if(gameScores[0].score[i].length > 1) {
       columnOne[i].textContent = gameScores[0].score[i][1];
-      columnOne[i].setAttribute = ('class', 'player_one already_scored');
+      columnOne[i].setAttribute('class', 'player_one already_scored');
     } else {
       // columnOne[i].textContent = 0;
     }
   }
-  //renders already chosen score for the seccond column
-  for(i = 0; i < scoreOptions.length; i++) {
-    if(gameScores[1].score[i].length > 1) {
-      columnTwo[i].textContent = gameScores[1].score[i][1];
-      columnTwo[i].setAttribute = ('class', 'player_two already_scored');
-    } else {
-      // columnOne[i].textContent = 0;
+  if(thePlayers.length === 2) {
+    //renders already chosen score for the seccond column
+    for(i = 0; i < scoreOptions.length; i++) {
+      if(gameScores[1].score[i].length > 1) {
+        columnTwo[i].textContent = gameScores[1].score[i][1];
+        columnTwo[i].setAttribute('class', 'player_two already_scored');
+      } else {
+        // columnOne[i].textContent = 0;
+      }
     }
   }
 }
@@ -151,17 +141,20 @@ function whoseTurnIsIt () {
     }
     turnsCompleted.push(simpleCount);
   }
-  console.log('completed turns:', turnsCompleted);
 
   // now set the currentplayer based on what we found
-  if (turnsCompleted[0] > turnsCompleted[1]) {
-    playerTurn = 1;
+  if(gameScores.length > 1 ) {
+    if (turnsCompleted[0] > turnsCompleted[1]) {
+      playerTurn = 1;
+    } else {
+      playerTurn = 0;
+    };
+    // also reset the turn counter
+    turnCounter = turnsCompleted[0] + turnsCompleted[1];
   } else {
     playerTurn = 0;
-  };
-  // also reset the turn counter
-  turnCounter = turnsCompleted[0] + turnsCompleted[1];
-
+    turnCounter = turnsCompleted[0];
+  }
 };
 
 
@@ -170,7 +163,7 @@ function whoseTurnIsIt () {
 createScoreTable();
 
 //check for saved games with same player and load there game data
-// checkForSavedGames();
+checkForSavedGames();
 
 //calling turn function to begin first turn
 turn();
