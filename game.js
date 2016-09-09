@@ -82,6 +82,7 @@ function checkForSavedGames() {
         var loadGameAnswer = prompt('You have a saved game. Would you like to resume it (answer "yes" or "no")?');
         loadGameAnswer = loadGameAnswer.toLowerCase();
 
+
         var newScoreString;
         if(loadGameAnswer === 'yes' || loadGameAnswer === 'y'){
           gameScores = [];
@@ -104,6 +105,8 @@ function checkForSavedGames() {
           // saved game removed from array, now put any remaining game data back
           newScoreString = JSON.stringify(savedGamesArray);
           localStorage.setItem(savedGameDataKey, newScoreString);
+
+          break;
         } else {
           alert('Sorry I don\'t understand your answer, I will just begin a new game for you.');
         }
