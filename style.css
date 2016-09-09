@@ -416,6 +416,33 @@ footer {
 	opacity:0.6;
 }
 
+#score_board table {
+ width: 400px;
+ display: block;
+ margin: 0 auto;
+ border-radius:5px;
+ border-right:1px solid #ca6666;
+ border-bottom:1px solid #ca6666;
+ border-left:1px solid #d22c2c;
+ border-top:1px solid #d22c2c;
+}
+
+.leader_board_name {
+	text-align: left;
+}
+
+.leader_board_score {
+ 	text-align: center;
+}
+
+#score_board td {
+ width: 180px;
+ font-size: 20px;
+ padding: 10px;
+ background-color:#e17272;
+ border:1px solid #e68a8a;
+}
+
 table {
 	width: 300px;
 	display: block;
