@@ -2,6 +2,7 @@
 
 //in order for high score to be calulated we must access local storage and pull score objects with name and score attribute. We may add time later
 var oldScoresKey = 'oldScores';
+var maxDisplayScores = 5;
 
 var oldScores = [];
 //retrieving stored scores and parsing back into array of objects
@@ -52,9 +53,8 @@ function renderTable() {
   scoreBoard.appendChild(table);
 
   //using data from leaderBoard to create table rows
-  var maxEntries = 3;
-  if (leaderBoard.length < maxEntries) maxEntries = leaderBoard.length;
-  for(var i = 0; i < maxEntries; i++) {
+  if (leaderBoard.length < maxDisplayScores) maxDisplayScores = leaderBoard.length;
+  for(var i = 0; i < maxDisplayScores; i++) {
     //creating the row elements
     var tableRow = document.createElement('tr');
     var leaderName = document.createElement('td');
@@ -64,6 +64,9 @@ function renderTable() {
     var place = i + 1;
     leaderName.textContent = place + '. ' + leaderBoard[i].playerName;
     leaderScore.textContent = leaderBoard[i].gameScore;
+    // set attributes
+    leaderName.setAttribute('class', 'leader_board_name');
+    leaderScore.setAttribute('class', 'leader_board_score');
 
     //appending data to table
     tableRow.appendChild(leaderName);
